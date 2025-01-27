@@ -1,0 +1,74 @@
+\def\myscale{0.5}
+\tikzset{block/.style={rectangle split, draw, rectangle split parts=2,
+		text width=14em*\myscale, text centered, rounded corners, minimum height=4em*\myscale},
+grnblock/.style={materia, fill=green!20, text width=10em*\myscale, text centered, rounded corners, minimum height=4em*\myscale},
+materia/.style={draw, fill=white!20, text width=15.0em*\myscale, text centered, minimum height=1.5em*\myscale,drop shadow},
+whtblock/.style={no shadows, materia, text width=30em*\myscale, minimum width=20em*\myscale, minimum height=10em*\myscale, rounded corners, drop shadow},
+line/.style={draw, -{Latex[length=2mm*\myscale,width=1mm]}},
+cloud/.style={draw, ellipse,fill=white!20, node distance=3cm*\myscale,    minimum height=4em*\myscale},
+container/.style={draw, rectangle,dashed,inner sep=0.9cm*\myscale, rounded
+		corners,fill=orange!10,minimum height=2cm*\myscale},
+container2/.style={draw, rectangle,dashed,inner sep=0.9cm*\myscale, rounded
+		corners,fill=blue!10,minimum height=2cm*\myscale},
+container3/.style={draw, rectangle,dashed,inner sep=0.9cm*\myscale, rounded
+		corners,fill=green!10,minimum height=2cm*\myscale},
+box/.style={draw, rectangle, rounded corners, thick, node
+		distance=7em*\myscale,
+		text width=6em*\myscale, text centered, minimum height=3.5em*\myscale},
+every node/.style={font=\tiny}}
+
+\tikzset{no shadows/.style={general shadow/.style=}}
+
+% Flowchart styles
+\def\minwidth{1}
+\def\minheight{0.7}
+\tikzstyle{startstop} = [rectangle, rounded corners,
+minimum width=1cm*\minwidth,
+minimum height=1cm*\minheight,
+text centered,
+draw=black,
+fill=red!30]
+
+\tikzstyle{io} = [trapezium,
+trapezium stretches=true, % A later addition
+trapezium left angle=70,
+trapezium right angle=110,
+minimum width=1cm*\minwidth,
+minimum height=1cm*\minheight, text centered,
+draw=black, fill=blue!30]
+
+\tikzstyle{process} = [rectangle, rounded corners,
+minimum width=1cm*\minwidth,
+minimum height=1cm*\minheight,
+text centered,
+%text width=2cm*\minwidth, 
+draw=black,
+fill=orange!30]
+
+\tikzstyle{decision} = [diamond,
+minimum width=1cm*\minwidth,
+minimum height=1cm*\minheight,
+text centered,
+draw=black,
+fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\pgfplotsset{%
+	my legend/.style={legend image code/.code={%
+					\node at (0cm,0cm){\ding{55}};
+				}},%
+	colormap/Set2-5,
+	cycle list/Set2-5,
+	% combine it with 'mark list*':
+	% cycle multiindex* list={
+	%     mark list*\nextlist
+	%     Set1-5\nextlist
+	% },
+	/pgfplots/layers/Bowpark/.define layer set={
+			axis background,axis grid,axis lines,main,axis ticks,axis tick labels,
+			axis descriptions,axis foreground
+		}{/pgfplots/layers/standard},
+	every axis/.append style={
+			set layers=Bowpark,
+		},
+}

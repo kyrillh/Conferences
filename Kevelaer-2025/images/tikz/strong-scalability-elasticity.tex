@@ -1,0 +1,85 @@
+\begin{tikzpicture}
+	\pgfplotsset{
+		every axis/.append style={
+				ybar stacked,
+				width=13cm,
+				height=7cm,
+				ylabel={Runtime (seconds)},
+				xlabel={Num. subdomains},
+				symbolic x coords={72, 144, 288, 576, 1152},
+				xtick=data,
+				enlarge x limits=0.15,
+				legend style={at={(1,1)},anchor=north east},
+				axis lines*=left, ymajorgrids, yminorgrids,
+				ymin=0,
+				ymax=100,
+				bar width=8pt,
+				minor y tick num=1,
+				xticklabel style={rotate=0,xshift=0ex,anchor=north},
+				cycle list name=Set2-5,
+			},
+		% Ensures that bars are plotted full
+		every axis plot/.append style={
+				fill,
+			},
+	}
+	\tikzstyle{mynodestyle} = [rotate=90, anchor=west]
+
+	% Solver = H1
+	\begin{axis}[bar shift=11pt, hide axis]
+		% Another option for relative node placement
+		% \node [left=11pt of 256.base, anchor=base] {test}; % Custom number above bar for 256
+		\node[mynodestyle] at ([xshift=11pt]axis cs:72,58) {$65$ $(3)$};
+		\node[mynodestyle] (one) at ([xshift=11pt]axis cs:144,27.5) {$62$ $(3)$};
+		\node[mynodestyle] at ([xshift=11pt]axis cs:288,13.6){$53$ $(3)$};
+		\node[mynodestyle] at ([xshift=11pt]axis cs:576,6.8){$44$ $(3)$};
+		\node[mynodestyle] at ([xshift=11pt]axis cs:1152,4.5){$41$ $(3)$};
+		\node [mynodestyle](oneRe) at ([xshift=11pt]axis cs:72,1) {H1};
+
+		\addplot coordinates {(72,58) (144,27.5) (288,13.6) (576,6.8) (1152,4.5)};
+	\end{axis}
+
+	% Solver = Add.
+	\begin{axis}[bar shift=0pt, hide axis]
+		\node[mynodestyle] at (axis cs:72,81.2) {$100$ $(4)$};
+		\node[mynodestyle](two) at (axis cs:144,34.5) {$97$ $(4)$};
+		\node[mynodestyle]at (axis cs:288,17) {$81$ $(4)$};
+		\node[mynodestyle]at (axis cs:576,9) {$75$ $(4)$};
+		\node[mynodestyle]at (axis cs:1152,6.2) {$71$ $(4)$};
+		\node [mynodestyle]at (axis cs:72,1) {Add.};
+
+		\addplot+ coordinates {(72,81.2) (144,34.5) (288,16.9) (576,9) (1152,6.2)};
+	\end{axis}
+
+	% Solver = NKS
+
+	\begin{axis}[bar shift=-11pt]
+		%% Overlap = 10
+		% \node [mynodestyle] at([xshift=-11pt]axis cs:72,42) {$190$ $(5)$};
+		% \node [mynodestyle](three) at([xshift=-11pt]axis cs:144,22.5) {$200$ $(5)$};
+		% \node [mynodestyle]at([xshift=-11pt]axis cs:288,11.8) {$170$ $(5)$};
+		% \node [mynodestyle]at([xshift=-11pt]axis cs:576,7.3) {$150$ $(5)$};
+		% \node [mynodestyle]at([xshift=-11pt]axis cs:1152,5.2) {$135$ $(5)$};
+		% \node [mynodestyle]at ([xshift=-11pt]axis cs:72,1) {NKS};
+		%
+		% \addplot+ coordinates {(72,41.7) (144,22.5) (288,11.8) (576,7.3) (1152,5.2)};
+
+
+		%% Overlap = 5
+		\node [mynodestyle]at([xshift=-11pt]axis cs:72,33) {$162$ $(5)$};
+		\node [mynodestyle](three) at([xshift=-11pt]axis cs:144,16) {$159$ $(5)$};
+		\node [mynodestyle]at([xshift=-11pt]axis cs:288,8) {$136$ $(5)$};
+		\node [mynodestyle]at([xshift=-11pt]axis cs:576,4) {$124$ $(5)$};
+		\node [mynodestyle]at([xshift=-11pt]axis cs:1152,3.2) {$108$ $(5)$};
+		\node [mynodestyle]at([xshift=-11pt]axis cs:72,1) {NKS};
+
+		\addplot+ coordinates {(72,34) (144,17.1) (288,9.1) (576,5.1) (1152,4.2)};
+		\node[text width=1.6cm] (gmres) at (axis cs:144,80){GMRES its. (Newton its.)};
+
+	\end{axis}
+
+	\draw [thin] (gmres) --  (one);
+	\draw [thin] (gmres) --  (two);
+	\draw [thin] (gmres) --  (three);
+
+\end{tikzpicture}

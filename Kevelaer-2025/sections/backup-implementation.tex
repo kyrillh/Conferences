@@ -1,0 +1,132 @@
+\begin{frame}[c]{Nonlinear Schwarz implementation}
+\centering
+    \begin{tikzpicture}[node distance=2cm]
+        \node (start) [startstop] {Init.};
+        \node (dec) [decision, right of=start] {Converged?};
+        
+        \node (evalCalF) [process, right of=dec, xshift=0.5cm] {Evaluate $\mathcal{F}(u^k)$};
+        \node (evalDCalF) [process, right of=evalCalF, xshift=0.5cm] {Evaluate $D\mathcal{F}(u^k)$};
+        \node (update) [process, above of=evalDCalF, yshift=-0.5cm] {Update $u^k$};
+        \node (evalF) [process, above of=evalCalF, yshift=-0.5cm] {Evaluate $F(u^{k+1})$};
+        
+        \node (stop) [startstop, below of=dec] {Stop};
+        
+        \draw [arrow] (start) -- (dec);
+        \draw [arrow] (dec) -- node[anchor=east] {yes} (stop);
+        \draw [arrow] (dec) -- node[anchor=south] {no} (evalCalF);
+        \draw [arrow] (evalCalF) -- (evalDCalF);
+        \draw [arrow] (evalDCalF) -- (update);
+        \draw [arrow] (update) -- (evalF);
+        \draw [arrow] (evalF) -| (dec);
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[c]{Nonlinear Schwarz implementation}
+\centering
+\def\opacity{0.25}
+    \begin{tikzpicture}[node distance=2cm]
+        \node (start) [startstop, opacity=\opacity] {Init.};
+        \node (dec) [decision, right of=start, opacity=\opacity] {Converged?};
+        
+        \node (evalCalF) [process, right of=dec, xshift=0.5cm] {Evaluate $\mathcal{F}(u^k)$};
+        \node (evalDCalF) [process, right of=evalCalF, xshift=0.5cm, opacity=\opacity] {Evaluate $D\mathcal{F}(u^k)$};
+        \node (update) [process, above of=evalDCalF, yshift=-0.5cm, opacity=\opacity] {Update $u^k$};
+        \node (evalF) [process, above of=evalCalF, yshift=-0.5cm, opacity=\opacity] {Evaluate $F(u^{k+1})$};
+        
+        \node (stop) [startstop, below of=dec, opacity=\opacity] {Stop};
+        
+        \draw [arrow, opacity=\opacity] (start) -- (dec);
+        \draw [arrow, opacity=\opacity] (dec) -- node[anchor=east] {yes} (stop);
+        \draw [arrow, opacity=\opacity] (dec) -- node[anchor=south] {no} (evalCalF);
+        \draw [arrow, opacity=\opacity] (evalCalF) -- (evalDCalF);
+        \draw [arrow, opacity=\opacity] (evalDCalF) -- (update);
+        \draw [arrow, opacity=\opacity] (update) -- (evalF);
+        \draw [arrow, opacity=\opacity] (evalF) -| (dec);
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Nonlinear Schwarz: the residual $\mathcal{F}(u^k)$}
+    Recall:
+    \begin{equation*}
+        \mathcal{F}(u) \coloneqq \sum_{i=0}^NP_iT_i(u)
+    \end{equation*}
+    with $T_i$ defined by 
+    \begin{equation*}
+        R_iF(u-P_iT_i(u)) = 0, \quad i = 0,1,\dots N
+    \end{equation*}
+    Requirements for evaluation $\mathcal{F}(u)$
+    \begin{enumerate}
+        \item Overlapping partition of the mesh
+        \item Build coarse basis functions
+        \item Solution of $R_iF(u-P_ig_i) = 0$ with $g_i\coloneqq T_i(u)$
+        \item Recombination of the local solutions
+    \end{enumerate}
+\end{frame}
+
+
+
+\begin{frame}{Nonlinear Schwarz: the residual $\mathcal{F}(u^k)$}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \vfill
+            \hspace*{10pt}
+            Nonlinear corrections 
+            \hspace*{20pt}
+            \begin{align*}
+                \hspace*{6pt}-\nabla\cdot((u^2+1)\nabla u)&=10\quad \text{in}\quad \Omega\subset\mathbb{R}^2,\\
+                        u &= 0\quad\text{on}\quad\partial\Omega
+            \end{align*}
+            \hspace*{10pt}with $u^0 = 1$
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \input{\mytikzpath/nonlinear_correction}
+            \end{figure}   
+        \end{column}
+    \end{columns}
+    
+    
+\end{frame}
+
+\begin{frame}[c]{Nonlinear Schwarz implementation}
+    \centering
+    \def\opacity{0.25}
+    \begin{tikzpicture}[node distance=2cm]
+        \node (start) [startstop, opacity=\opacity] {Init.};
+        \node (dec) [decision, right of=start, opacity=\opacity] {Converged?};
+        
+        \node (evalCalF) [process, right of=dec, xshift=0.5cm, opacity=\opacity] {Evaluate $\mathcal{F}(u^k)$};
+        \node (evalDCalF) [process, right of=evalCalF, xshift=0.5cm] {Evaluate $D\mathcal{F}(u^k)$};
+        \node (update) [process, above of=evalDCalF, yshift=-0.5cm, opacity=\opacity] {Update $u^k$};
+        \node (evalF) [process, above of=evalCalF, yshift=-0.5cm, opacity=\opacity] {Evaluate $F(u^{k+1})$};
+        
+        \node (stop) [startstop, below of=dec, opacity=\opacity] {Stop};
+        
+        \draw [arrow, opacity=\opacity] (start) -- (dec);
+        \draw [arrow, opacity=\opacity] (dec) -- node[anchor=east] {yes} (stop);
+        \draw [arrow, opacity=\opacity] (dec) -- node[anchor=south] {no} (evalCalF);
+        \draw [arrow, opacity=\opacity] (evalCalF) -- (evalDCalF);
+        \draw [arrow, opacity=\opacity] (evalDCalF) -- (update);
+        \draw [arrow, opacity=\opacity] (update) -- (evalF);
+        \draw [arrow, opacity=\opacity] (evalF) -| (dec);
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Nonlinear Schwarz: the tangent $D\mathcal{F}(u^k)$}
+    Recall: 
+    \begin{equation*}
+        D\mathcal{F}(u^k) =\sum_{i=0}^NP_i(R_iDF(u_i^k)P_i)^{-1}R_iDF(u_i^k)
+    \end{equation*}
+    with $u_i = u-P_iT_i(u)$\\~\\
+    \begin{itemize}
+       \setlength{\itemsep}{10pt}
+        \item Requires assembly of Jacobian $DF(u_i^k)$ on each subdomain
+        \item This is already done in local and coarse Newton methods \\$\implies$ stored and reused to assemble $D\mathcal{F}(u^k)$
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Software ecosystem}
+    \input{\mytikzpath/Software}
+\end{frame}
