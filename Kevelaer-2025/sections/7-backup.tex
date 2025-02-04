@@ -48,6 +48,7 @@
 				\item Subdomain size: $150\times 150$ elements
 				\item Outer Newton rel. tol.  = \num{e-6}
 				\item Outer Newton abs. tol.  = \num{e-6}
+        \item Line-search backtracking
 				\item GMRES rel. tol. = \num{e-4}
 				\item GMRES max. its. = $1000$
 				\item Krylov subspace dim. = $500$
@@ -241,20 +242,46 @@
 	}
 \end{frame}
 
-\begin{frame}[noframenumbering]{LDC coarse basis functions}
-	\begin{figure}
-		\centering
-		\begin{subfigure}{0.5\textwidth}
-			\includegraphics[width=\textwidth]{images/RGDSW-x}
-			\caption{RGDSW $x$ component.}
-		\end{subfigure}%
-		\begin{subfigure}{0.5\textwidth}
-			\includegraphics[width=\textwidth]{images/MsFEM-x}
-			\caption{MsFEM $x$ component.}
-		\end{subfigure}
-		\caption{Components of $x$ velocity coarse basis function.}
-	\end{figure}
+\begin{frame}[noframenumbering]{Nonlinear Schwarz domain decomposition methods}% \footnote{\tiny Cai and Keyes 2002} \footnote{\tiny Dolean, Gander, Cherie, Kwok and Masson 2016}}
+	\vspace{-5mm}
+	\begin{columns}
+		\begin{column}{0.7\textwidth}
+      \centering
+			\begin{block}{\normalsize Alternative nonlinear problem}
+				The discretized nonlinear partial differential equation
+				\begin{equation*}
+					F(u) = 0,\, F : V\mapsto V
+				\end{equation*}
+				is reformulated to
+				\begin{equation*}
+          \mathcal{F}(u) = 0,\, \mathcal{F} : V\mapsto V.
+				\end{equation*}
+				The new nonlinear function $\mathcal{F}(u)$ is given implicitly by computing local nonlinear corrections $T_i(u),\,i = 1,\dots,N$ on (overlapping) subdomains
+			\end{block}
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\begin{figure}
+				\includegraphics[height=0.4\textwidth,width=0.7\textwidth]{images/DD-mesh-1.png}
+				\vspace{-2mm}
+				\caption{\tiny Global domain $\Omega$, FE space $V$}
+			\end{figure}
+			\vspace{-6mm}
+			\begin{figure}
+				\includegraphics[height=0.4\textwidth,width=0.7\textwidth]{images/DD-mesh-2.png}
+				\vspace{-2mm}
+				\caption{\tiny Subdomains $\Omega_i$, FE spaces $V(\Omega_i)$}
+			\end{figure}
+			\vspace{-6mm}
+			\begin{figure}
+				\includegraphics[height=0.4\textwidth,width=0.7\textwidth]{images/DD-mesh-3.png}
+				\vspace{-2mm}
+				\caption{\tiny Overlapping SDs $\Omega_i'$, FE spaces $V_i$}
+			\end{figure}
+		\end{column}
+
+	\end{columns}
 \end{frame}
+
 
 \begin{frame}[noframenumbering]{LDC coarse basis functions}
 	\begin{figure}

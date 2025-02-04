@@ -1,4 +1,9 @@
-\section{Neo-Hookean hyperelasticity}
+\section{Implementation results}
+
+\begin{frame}{Software ecosystem}
+    \input{images/tikz/Software}
+\end{frame}
+\subsection{Neo-Hookean hyperelasticity}
 
 \begin{frame}{2D compressible plane-stress neo-Hookean material}
 	\vspace{0mm}
@@ -28,16 +33,17 @@
 				\item $P(F) = \frac{E}{1(1+\nu)}(F-F^{-T}) + \frac{E\nu}{(1+\nu)(1-2\nu)}\mathrm{ln}(\mathrm{det}(F)F^{-T})$
 				\item $\nu$ = 0.3
 				\item $E$ = 210 GPa
+				\item $5\textrm{m}\times 1\textrm{m}$ 2D mesh with \numgru{2572710} nodes
         \item $g_D = 0$ on short edges
 				\item $g_N = 0$ on long edges
 				\item P1 elements
-				\item $5\textrm{m}\times 1\textrm{m}$ 2D mesh with \numgru{2572710} nodes
         \item Solver relative tolerance: $10^{-4}$
-				\item MsFEM coarse space
+        \item MsFEM coarse space \footnotemark{}
 				% \item $f_{vol} = (0,-f_y)$
 			\end{itemize}
 		\end{column}
 	\end{columns}
+  \footnotetext{\tiny Dohrmann, Widlund (2017)}
 \end{frame}
 
 \begin{frame}{Strong scaling: nonlinear elasticity}

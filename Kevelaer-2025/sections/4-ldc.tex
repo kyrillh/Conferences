@@ -1,7 +1,7 @@
-\section{2D lid-driven cavity}
+\subsection{2D lid-driven cavity}
 
 \begin{frame}{Stationary and dimensionless Navier-Stokes equations}
-  \vspace{-1em}
+  \vspace{-5mm}
 	\begin{columns}
 		\begin{column}{0.6\textwidth}%
 			\begin{align*}
@@ -9,14 +9,14 @@
 				{\rm div}(v)                                          & = 0 \;   & {\rm in} \; \Omega          \\
 				v                                                     & = v_0 \; & {\rm on} \; \partial \Omega
 			\end{align*}
+  \vspace{-4mm}
 			\begin{itemize}
-				\item $Re$ is the Reynolds number
 				\item $v_0=(1,0)$ on the lid and zero everywhere else
-				\item $P_1\textrm{-}P_1\textrm{-}Stab$ (Bochev-Dohrmann)
+        \item $P_1\textrm{-}P_1\textrm{-}Stab$ (Bochev-Dohrmann) \footnotemark{}
 				\item Subdomain size: $150\times 150$ elements
 				\item Solver absolute and relative tolerances: \num{e-6}
-				\item RGDSW coarse space
-				\item H1 variant
+        \item RGDSW coarse space \footnotemark{}
+				\item Hybrid-1 variant
 			\end{itemize}
 		\end{column}
 		\begin{column}{0.4\textwidth}
@@ -27,9 +27,11 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
+  \footnotetext[5]{\tiny Dohrmann, Bochev (2004)}
+  \footnotetext{\tiny Dohrmann, Widlund (2017)}
 \end{frame}
 
-\begin{frame}{Lid-driven cavity: convergence various $Re$}
+\begin{frame}{Lid-driven cavity: Newton-Krylov-Schwarz vs Hybrid-1}
 	\begin{itemize}
 		\item $256$ subdomains
 	\end{itemize}
@@ -55,6 +57,22 @@
 		\label{fig:weak-scalability-per-iter-nls}
 	\end{figure}
 \end{frame}
+
+\begin{frame}{LDC coarse basis functions}
+	\begin{figure}
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\includegraphics[width=\textwidth]{images/RGDSW-x}
+			\caption{RGDSW $x$ component.}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\includegraphics[width=\textwidth]{images/MsFEM-x}
+			\caption{MsFEM $x$ component.}
+		\end{subfigure}
+		\caption{Components of $x$ velocity coarse basis function.}
+	\end{figure}
+\end{frame}
+
 \begin{frame}{MsFEM vs. RGDSW}
 	% Mention that: 
 	%   - Re has no effect 
