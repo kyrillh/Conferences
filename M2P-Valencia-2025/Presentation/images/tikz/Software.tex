@@ -1,0 +1,88 @@
+\begin{tikzpicture}[node distance = 1cm, auto]
+
+	\node [whtblock,text depth=14mm] (FEDDLIB) {
+		{\footnotesize \textbf{FEDDLib}\textsuperscript{a}} \\[0.3em] \tiny \textbf{F}inite \textbf{E}lement and \textbf{D}omain \textbf{D}ecomposition \textbf{Lib}rary
+		\begin{itemize}
+			\item{Parallel finite element assembly}
+			\item{Specific problem definition}
+			\item{Mesh handling routines}
+			      % \item \textcolor{orange}{Update two-level nonlinear Schwarz solver for elasticity and Navier-Stokes}
+			      % \item \textcolor{orange}{Test with various coarse spaces}
+		\end{itemize}
+		% \hspace*{-25mm}\scalebox{.7}{By University of Cologne, TU Delft, TU Freiberg}
+	};
+
+	\node [whtblock, right=of FEDDLIB,node distance=7cm, rectangle split part fill={orange!20,blue!5},] (FeatFlow) {
+		{ \footnotesize\textbf{FEAT}\textsuperscript{b}}\\[0.3em] \tiny Finite element based solution of incompressible\\Navier-Stokes in 2D and 3D
+		\vspace{2pt}
+		\begin{itemize}
+			%\setlength{\itemsep}{0pt}
+			\item \textcolor{red}{Interface with \texttt{FROSch}}
+			\item \textcolor{red}{Test (non-Newtonian, high Reynolds, exascale)}
+		\end{itemize}};
+
+	%===============================================    
+	\node [whtblock, below=of FEDDLIB, text depth=18mm, node distance=3.5cm,] (Trilinos) {
+		{\footnotesize \textbf{Trilinos}\textsuperscript{c}}
+		\begingroup
+		\addtolength{\leftmargini}{0.5cm}
+		\vspace{1pt}
+		\tiny
+		\begin{itemize}
+			%\setlength{\itemsep}{0pt}
+			\item Data services: Vectors, matrices, graphs and related operations
+			\item Linear and Eigenproblem solvers
+			\item Nonlinear solvers and analysis tools
+		\end{itemize}
+		\endgroup
+	};
+
+	\node[inner sep=0pt] (trilinos_logo) at ([xshift=6mm, yshift=0mm] Trilinos.west){\includegraphics[width=.125\textwidth, angle=90,origin=c]{images/logo/Trilinos_logo_new.png}};
+
+	\node [whtblock, text depth=18mm, right=of Trilinos,node distance=7cm,rectangle split part fill={orange!20,blue!5},] (Frosch) {
+		{\footnotesize \textbf{FROSch}\textsuperscript{d}} \\[0.4em]  \hspace{6em}\tiny\textbf{F}ast and \textbf{R}obust \textbf{O}verlapping \textbf{S}chwarz
+		\vspace*{0.5em}
+		\begingroup
+		\addtolength{\leftmargini}{4em}
+		\begin{itemize}
+			\item \textcolor{red}{Implement two-level nonlinear Schwarz solver}
+			\item \textcolor{red}{Test with various coarse spaces on various model problems}
+		\end{itemize}
+		\endgroup
+	};
+
+	\node[inner sep=0pt] (trilinos_logo) at ([xshift=7.5mm, yshift=0mm] Frosch.west){\includegraphics[width=.1\textwidth]{images/logo/FROSch_logo.png}};
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%   CONTAINERS -- BACKGROUND LIGHT-DASHED BLOCKS
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{scope}[on background layer]
+
+		\coordinate (aux2) at ([yshift=0mm]Trilinos.north);
+		\node[container2, fit=(aux2) (Trilinos) (Frosch)] (Trilinos_blue) {};
+
+		\coordinate (aux3) at ([yshift=0mm] FeatFlow.north);
+		\node[container3, fit=(aux3) (FeatFlow)] (FeatFlow_Green) {};
+
+		\coordinate (aux1) at ([yshift=0mm]FEDDLIB.north);
+		\node [container,fit=(aux1) (FEDDLIB)] (FEDDLIB_ORANGE) {};
+		\node at ([yshift=0.7mm]Trilinos_blue.north) [fill=gray!10,draw,minimum width=8em,minimum height=1em] (FEDTRI-label) {\footnotesize\textbf{Interface}};
+
+	\end{scope}
+	%************************************************************
+	%************************************************************
+	%  Draw edges
+	%************************************************************
+	%************************************************************
+	% \path [line,thick] (FEDDLIB) -- (FEDTRI-label);
+	% \path [line,thick] (Trilinos) -- (Frosch);
+	% \path [line,thick] (FEDTRI-label) -- (Trilinos);
+	% \path [line,red,thick] (FeatFlow) -- (FEDTRI-label);
+
+\end{tikzpicture}
+\tiny\\~\\
+
+a: University of Cologne, TU Delft, TU Freiberg (https://github.com/FEDDLib/FEDDLib.git)\\
+b: TU Dortmund (https://wwwold.mathematik.tu-dortmund.de/~featflow/en/software.html)\\
+c: Sandia National Laboratories (https://trilinos.github.io)\\
+d: University of Cologne, TU Delft, TU Freiberg (https://shylu-frosch.github.io)\\

@@ -1,0 +1,90 @@
+\begin{tikzpicture}
+	\pgfplotsset{
+		every axis/.append style={
+				ybar stacked,
+				width=13cm,
+				height=7cm,
+				ylabel={Runtime (seconds)},
+				xlabel={$Re$},
+				symbolic x coords={1000,2000,2750,4000,5000,6000,7000},
+				xtick=data,
+				enlarge x limits=0.15,
+				legend style={at={(0.9,1)},anchor=north west},
+				axis lines*=left, ymajorgrids, yminorgrids,
+				ymin=0,
+				ymax=1800,
+				bar width=12pt,
+				minor y tick num=1,
+				xticklabel style={rotate=0,xshift=0ex,anchor=north},
+				cycle list name=Set2-5,
+			},
+		% Ensures that bars are plotted full
+		every axis plot/.append style={
+				fill,
+			},
+	}
+	% RGDSW
+	\begin{axis}[bar shift=-8pt, hide axis]
+		\node [rotate=90](rgdsw) at ([xshift=-8pt]axis cs:1000,150) {RGDSW};
+		% Inner solve
+		\addplot coordinates {(1000,33) (2000,45) (2750,54) (4000,61) (5000,74) (6000,104)      };
+		% Coarse solve
+		\addplot coordinates {(1000,27) (2000,32) (2750,40) (4000,42) (5000,51) (6000,69)       };
+		% GMRES
+		\addplot coordinates {(1000,222) (2000,340) (2750,430) (4000,559) (5000,734) (6000,1142)};
+		% Other
+		\addplot coordinates {(1000,52) (2000,59) (2750,67) (4000,76) (5000,90) (6000,130)      };
+
+    \node [rotate=90,anchor=west](1000) at ([xshift=-8pt]axis cs:1000,334) {$1700$ $(6)$};
+		\node [rotate=90,anchor=west](2000) at ([xshift=-8pt]axis cs:2000,476) {$2400$ $(7)$};
+		\node [rotate=90,anchor=west](2750) at ([xshift=-8pt]axis cs:2750,591) {$2900$ $(8)$};
+		\node [rotate=90,anchor=west](4000) at ([xshift=-8pt]axis cs:4000,738) {$3600$ $(9)$};
+		\node [rotate=90,anchor=west](5000) at ([xshift=-8pt]axis cs:5000,949) {$4600$ $(11)$};
+		\node [rotate=90,anchor=west](6000) at ([xshift=-8pt]axis cs:6000,1445) {$7000$ $(16)$};
+		% \node [rotate=90,anchor=west](7000) at ([xshift=-8pt]axis cs:7000,2818) {$14000$ $(30)$};
+
+	\end{axis}
+
+	%  (7000,202)
+	%  (7000,139)
+	% (7000,2243)
+	%  (7000,234)	
+
+	\begin{axis}[bar shift=8pt]
+		\node [rotate=90](msfem) at ([xshift=8pt]axis cs:1000,140) {MsFEM};
+		% Inner solve
+		\addplot coordinates {(1000,34) (2000,58) (2750,74) (4000,0) (5000,0) (6000,0) };
+		% Coarse solve
+		\addplot coordinates {(1000,39) (2000,59) (2750,63) (4000,0) (5000,0) (6000,0) };
+		% GMRES
+		\addplot coordinates {(1000,174) (2000,345) (2750,468) (4000,0) (5000,0) (6000,0) };
+		% Other
+		\addplot coordinates {(1000,53) (2000,75) (2750,91) (4000,0) (5000,0) (6000,0) };
+
+		\legend{
+			Inner solve,
+			Coarse solve,
+			GMRES,
+			Other
+		}
+		\node[rotate=90,anchor=west](one) at ([xshift=8pt]axis cs:1000,300) {$1400$ $(6)$};
+		\node[rotate=90,anchor=west] at ([xshift=8pt]axis cs:2000,537) {$2600$ $(9)$};
+		\node[rotate=90,anchor=west] at ([xshift=8pt]axis cs:2750,696) {$3400$ $(11)$};
+
+    \node at ([xshift=8pt]axis cs:4000,40) {\scriptsize\color{red}\ding{55}};
+		\node at ([xshift=8pt]axis cs:5000,40) {\scriptsize\color{red}\ding{55}};
+    \node at ([xshift=8pt]axis cs:6000,40) {\scriptsize\color{red}\ding{55}};
+
+
+	\end{axis}
+
+	\node[rotate=0, text width=1.6cm] (gmres) at ([xshift=8,yshift=50]1000){GMRES its. (Newton its.)};
+	% \node[rotate=0, text width=1.8cm] (coarsespace) at ([yshift=-60,xshift=-10]1000){Coarse space};
+
+	\draw [thin] (gmres) --  (1000);
+	\draw [thin] (gmres) --  (one);
+
+	% \draw [thin] (coarsespace) --  (rgdsw);
+	% \draw [thin] (coarsespace) --  (msfem);
+
+\end{tikzpicture}

@@ -1,0 +1,120 @@
+\documentclass[aspectratio=169,11pt,t]{beamer}
+\usetheme{default}
+\usecolortheme{seahorse}
+\setbeamertemplate{footline}[frame number]
+\setbeamercolor*{title}{bg=white}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{frametitle}{%
+    \usebeamerfont{frametitle}\insertframetitle%
+    \vphantom{$\frac{1}{2}$}
+    \hrule% Uncomment to see desired effect, without a full-width hrule
+    \par
+    \hspace*{-\dimexpr0.5\paperwidth-0.5\textwidth}
+}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}{\textbf{--}}
+\setbeamertemplate{caption label separator}{}
+\setbeamercovered{transparent}
+\setbeamertemplate{sections/subsections in toc}[circle]
+% \setbeameroption{show only notes}
+\AtBeginSection[]{ 
+    \begin{frame}[noframenumbering]{Outline} 
+        \tableofcontents[currentsection] 
+    \end{frame} 
+}
+
+\useinnertheme[rounded]{tcolorbox}
+
+
+
+\usepackage{lmodern} 
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{siunitx}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{media9}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,shapes,fit,positioning,shadows,backgrounds,mindmap}
+\usepgfplotslibrary{groupplots,colorbrewer,colormaps}
+% Define option for killing shadows in nodes
+
+\usepackage{multirow}
+\usepackage{varwidth}
+\usepackage{stmaryrd}
+\usepackage{environ}
+\usepackage{nicematrix}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pifont}
+\usepackage[outdir=./images/eps/]{epstopdf}
+\captionsetup[figure]{labelformat=empty}
+\usepackage[
+backend=biber,
+style=alphabetic,
+citestyle=ieee
+]{biblatex}
+% \usepackage[ddmmyyyy]{datetime}
+% \renewcommand{\dateseparator}{.}
+\usepackage{tabularx}
+% \usepackage{latexsym,xcolor,multicol,booktabs}
+% \usepackage{graphicx,pstricks,stackengine}      
+% \usepackage{physics}
+% \usepackage{hyperref}
+% \usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\algtext*{EndWhile}% Remove "end while" text
+\algtext*{EndFor}% Remove "end if" text
+\addbibresource{references.bib}
+\input{images/tikz/tikz_config}
+
+\newcommand{\numgru}{\num[group-minimum-digits=3]}
+
+\title{\Large Parallel implementation of two-level \mbox{nonlinear} Schwarz domain decomposition methods}
+\vspace*{-5mm}
+\author[K. Ho]{\footnotesize Kyrill Ho\inst{1} \and Axel Klawonn\inst{1,2} \and Martin Lanser\inst{1,2}}
+\institute[UoC]{\inst{1} Center for Data and Simulation Science\\University of Cologne \and \inst{2} Department of Mathematics and Computer Science\\University of Cologne}
+\date{\scriptsize Math 2 Product, Valencia, \today}
+\titlegraphic{\vspace{-0.3cm}
+    \includegraphics[width=90pt]{images/logo/UoC_logo.pdf}
+    \includegraphics[width=45pt]{images/logo/CDS_logo.pdf}
+    \hspace{10pt}
+    \includegraphics[width=45pt]{images/logo/Scalexa_logo_3-1.png}
+}
+
+\def\myitemsep{10pt}
+\def\mytikzpath{images/tikz}
+
+\begin{document}
+    \begin{frame}[noframenumbering,plain]
+        \titlepage
+    \end{frame}
+    % border around blocks
+    \tcbset{
+        boxrule=0.5pt,
+        frame style={draw,black!65!white}
+    }   
+    \input{sections/project}
+    \begin{frame}{Outline}
+        \tableofcontents
+    \end{frame}
+
+    \input{sections/1-theory}
+
+    \input{sections/3-neo-hooke}
+
+    \input{sections/4-ldc}
+
+    \input{sections/5-outlook}
+    
+    \input{sections/6-end}
+
+    \input{sections/7-backup}
+
+    \input{sections/2-nonlin-laplace}
+
+\end{document}

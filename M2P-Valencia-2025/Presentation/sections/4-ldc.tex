@@ -1,0 +1,104 @@
+\subsection{2D lid-driven cavity}
+
+\begin{frame}{Stationary and dimensionless Navier-Stokes equations}
+  \vspace{-5mm}
+	\begin{columns}
+		\begin{column}{0.6\textwidth}%
+			\begin{align*}
+				-\frac{1}{Re} \Delta v + (v \cdot \nabla)v + \nabla p & = 0 \;   & {\rm in}\; \Omega           \\
+				{\rm div}(v)                                          & = 0 \;   & {\rm in} \; \Omega          \\
+				v                                                     & = v_0 \; & {\rm on} \; \partial \Omega
+			\end{align*}
+  \vspace{-4mm}
+			\begin{itemize}
+				\item $v_0=(1,0)$ on the lid and zero everywhere else
+        \item $P_1\textrm{-}P_1\textrm{-}Stab$ (Bochev-Dohrmann) \footnotemark{}
+				\item Subdomain size: $150\times 150$ elements
+				\item Solver absolute and relative tolerances: \num{e-6}
+        \item RGDSW coarse space \footnotemark{}
+				\item Hybrid variant
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}
+				\centering
+				\includegraphics[width=0.7\textwidth]{images/ldc.png}
+				\caption{Lid-driven cavity}
+			\end{figure}
+		\end{column}
+	\end{columns}
+  \footnotetext[5]{\tiny Dohrmann, Bochev (2004)}
+  \footnotetext{\tiny Dohrmann, Widlund (2017)}
+\end{frame}
+
+\begin{frame}{Lid-driven cavity: Newton-Krylov-Schwarz vs Hybrid}
+	\begin{itemize}
+		\item $256$ subdomains
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\input{images/tikz/log-residual-plot-ldc.tex}
+		\label{fig:residual-ldc}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
+	\begin{figure}
+		\centering
+		\input{images/tikz/scalability-ldc-schwarz.tex}
+		\label{fig:weak-scalability-nls}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
+	\begin{figure}
+		\centering
+		\input{images/tikz/scalability-ldc-schwarz-per-iter.tex}
+		\label{fig:weak-scalability-per-iter-nls}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{LDC coarse basis functions}
+	\begin{figure}
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\includegraphics[width=\textwidth]{images/RGDSW-x}
+			\caption{RGDSW $x$ component.}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\includegraphics[width=\textwidth]{images/MsFEM-x}
+			\caption{MsFEM $x$ component.}
+		\end{subfigure}
+		\caption{Components of $x$ velocity coarse basis function.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{MsFEM vs. RGDSW}
+	% Mention that: 
+	%   - Re has no effect 
+	%   - MsFEM was faster for Re=1000 but maybe RGDSW can be sped up with proper tuning
+	%   - These results were generated with higher GMRES tollerance which increases GMRES count and runtime without a positive effect
+	\begin{itemize}
+		\item $256$ subdomains
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\input{images/tikz/rgdsw-vs-msfem-ldc-schwarz.tex}
+		\label{fig:msfem-vs-rgdsw}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Summary lid-driven cavity}
+	\begin{itemize}
+    \item Hybrid more robust than NKS against nonlinearity
+    \item It's weak scaling is excellent up to $4096$ subdomains\\then coarse solve time increases % (larger coarse space improves nonlinear preconditioning)
+		\item It's difficult to tune e.g. what makes a good coarse space?%: many parameters that have a potentialy significant impact on performance
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.55\textwidth]{images/nls.png}
+	\end{figure}
+	% Bottom line: very sensitive to proper tuning, The coarse space does not encode the Re somehow but it's discretisation properties are critical.
+\end{frame}
+
+

@@ -1,0 +1,98 @@
+\begin{tikzpicture}
+	\pgfplotsset{
+		every axis/.append style={
+				ybar stacked,
+				width=13cm,
+				height=7cm,
+				ylabel={Runtime (seconds)},
+				xlabel={Num. subdomains},
+				symbolic x coords={256, 576, 1024, 2025, 4096, 9216},
+				xtick=data,
+				enlarge x limits=0.15,
+				legend style={at={(1,1)},anchor=north west},
+				axis lines*=left, ymajorgrids, yminorgrids,
+				ymin=0,
+				ymax=500,
+				bar width=8pt,
+				minor y tick num=1,
+				xticklabel style={rotate=0,xshift=0ex,anchor=north},
+				cycle list name=Set2-5,
+			},
+		% Ensures that bars are plotted full
+		every axis plot/.append style={
+				fill,
+			},
+	}
+  \tikzstyle{mynodestyle} = [rotate=90, anchor=west]
+
+	% Re = 1000
+	\begin{axis}[bar shift=-11pt, hide axis]
+		% Another option for relative node placement
+		% \node [left=11pt of 256.base, anchor=base] {test}; % Custom number above bar for 256
+		\node[mynodestyle] (one) at ([xshift=-11pt]axis cs:256,183) {$720$ $(6)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:576,160) {$520$ $(5)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:1024,126){$350$ $(4)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:2025,129){$310$ $(4)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:4096,130){$250$ $(4)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:9216,220){$290$ $(5)$};
+		\node (oneRe) at ([xshift=-11pt]axis cs:256,15) {$1$};
+
+		\addplot coordinates {(256,33) (576,29) (1024,25) (2025,25) (4096,25) (9216,30)};
+		\addplot+ coordinates {(256,27) (576,26) (1024,26) (2025,29) (4096,31) (9216,55.8)};
+		\addplot+ coordinates {(256,71) (576,56) (1024,35) (2025,33) (4096,29.5) (9216,83)};
+		\addplot+ coordinates {(256,51.7) (576,47.3) (1024,40) (2025,42) (4096,44.5) (9216,55.2)};
+
+	\end{axis}
+
+	% Re = 2000
+	\begin{axis}[bar shift=0pt, hide axis]
+		\node[mynodestyle](256) at (axis cs:256,239) {$1000$ $(7)$};
+		\node[mynodestyle](576) at (axis cs:576,223) {$820$ $(6)$};
+		\node[mynodestyle](1024) at (axis cs:1024,178) {$610$ $(5)$};
+		\node[mynodestyle](2025) at (axis cs:2025,140) {$390$ $(4)$};
+		\node[mynodestyle](4096) at (axis cs:4096,138) {$300$ $(4)$};
+		\node[mynodestyle](9216) at (axis cs:9216,240) {$300$ $(5)$};
+		\node at (axis cs:256,15) {$2$};
+
+		\addplot+ coordinates {(256,44) (576,40) (1024,32) (2025,26) (4096,26) (9216,32)};
+		\addplot+ coordinates {(256,32) (576,32) (1024,30) (2025,29) (4096,33) (9216,72)};
+		\addplot+ coordinates {(256,104) (576,95) (1024,39) (2025,45) (4096,36) (9216,86)};
+		\addplot+ coordinates {(256,59) (576,56) (1024,77) (2025,40) (4096,43) (9216,56)};
+	\end{axis}
+
+	% Re = 4000
+
+	\begin{axis}[bar shift=11pt]
+		\node (three)[rotate=90,anchor=west]at([xshift=11pt]axis cs:256,345) {$1500$ $(9)$};
+    \node [mynodestyle] at([xshift=11pt]axis cs:576,400) {$1700$ $(10)$};
+		\node [mynodestyle]at([xshift=11pt]axis cs:1024,326) {$1200$ $(8)$};
+		\node [mynodestyle]at([xshift=11pt]axis cs:2025,246) {$830$ $(6)$};
+		\node [mynodestyle]at([xshift=11pt]axis cs:4096,201) {$580$ $(5)$};
+		\node [mynodestyle]at([xshift=11pt]axis cs:9216,285) {$430$ $(5)$};
+		\node at ([xshift=11pt]axis cs:256,15) {$4$};
+
+		\addplot+ coordinates {(256,61) (576,66) (1024,53) (2025,42) (4096,34) (9216,33.7)};
+		\addplot+ coordinates {(256,42) (576,52) (1024,49) (2025,44) (4096,43) (9216,75)};
+		\addplot+ coordinates {(256,167) (576,202) (1024,150) (2025,101) (4096,72) (9216,125)};
+		\addplot+ coordinates {(256,75) (576,88) (1024,74) (2025,59) (4096,52) (9216,55.8)};
+
+    \node[anchor=south,text width=1.6cm] (gmres) at (axis cs:256,440){GMRES its. (Newton its.)};
+
+		\legend{
+			Inner solve,
+			Coarse solve,
+			GMRES,
+			Other
+		}
+
+	\end{axis}
+
+	\node[rotate=0, text width=1.8cm] (Re) at ([yshift=-110,xshift=-18]256){Re ($\times 10^{3}$)};
+
+	\draw [thin] (gmres) --  (256);
+	\draw [thin] (gmres) --  (one);
+	\draw [thin] (gmres) --  (three);
+
+	\draw [thin] (Re) --  (oneRe);
+
+\end{tikzpicture}
