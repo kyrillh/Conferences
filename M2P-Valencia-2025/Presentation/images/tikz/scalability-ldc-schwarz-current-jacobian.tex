@@ -1,0 +1,101 @@
+\begin{tikzpicture}
+	\pgfplotsset{
+		every axis/.append style={
+				ybar stacked,
+				width=13cm,
+				height=7cm,
+				ylabel={Runtime (seconds)},
+				xlabel={Num. subdomains},
+				symbolic x coords={256, 576, 1024, 2025, 4096, 9216},
+				xtick=data,
+				enlarge x limits=0.15,
+				legend style={at={(1,1)},anchor=north west},
+				axis lines*=left, ymajorgrids, yminorgrids,
+				ymin=0,
+				ymax=500,
+				bar width=8pt,
+				minor y tick num=1,
+				xticklabel style={rotate=0,xshift=0ex,anchor=north},
+				cycle list name=Set2-5,
+			},
+		% Ensures that bars are plotted full
+		every axis plot/.append style={
+				fill,
+			},
+	}
+  \tikzstyle{mynodestyle} = [rotate=90, anchor=west]
+
+	% Re = 1000
+	\begin{axis}[bar shift=-11pt, hide axis]
+		% Another option for relative node placement
+		% \node [left=11pt of 256.base, anchor=base] {test}; % Custom number above bar for 256
+		\node[mynodestyle] (one) at ([xshift=-11pt]axis cs:256,183) {$450$ $(4)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:576,160) {$390$ $(4)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:1024,126){$240$ $(3)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:2025,129){$210$ $(3)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:4096,130){$180$ $(3)$};
+		\node[mynodestyle] at ([xshift=-11pt]axis cs:9216,220){$290$ $(5)$};
+		\node (oneRe) at ([xshift=-11pt]axis cs:9216,15) {$1$};
+
+        \addplot coordinates  {(256,23.8 ) (576,  22.8 ) (1024, 18.3 ) (2025, 20	) (4096, 17.9)  (9216,30)};   
+        \addplot+ coordinates {(256,18.3 ) (576,  19.9 ) (1024, 19.8 ) (2025, 22	) (4096, 25.9)  (9216,55.8)}; 
+        \addplot+ coordinates {(256,42.2 ) (576,  40.3 ) (1024, 25 )   (2025, 22.8	) (4096, 20.7)  (9216,83)};   
+        \addplot+ coordinates {(256,23.7 ) (576,  26   ) (1024, 22.8 ) (2025, 23.9	) (4096, 24.1)  (9216,55.2)}; 
+
+    \end{axis}
+
+	% Re = 2000
+	\begin{axis}[bar shift=0pt, hide axis]
+
+		\node[rotate=0] at (axis cs:256,12) {\scriptsize\color{red}\ding{55}};
+		\node[mynodestyle](576) at (axis cs:576,223) {$610$ $(5)$};
+		\node[mynodestyle](1024) at (axis cs:1024,178) {$440$ $(4)$};
+		\node[mynodestyle](2025) at (axis cs:2025,140) {$370$ $(4)$};
+		\node[mynodestyle](4096) at (axis cs:4096,138) {$310$ $(4)$};
+		\node[mynodestyle](9216) at (axis cs:9216,240) {$300$ $(5)$};
+		\node at (axis cs:9216,15) {$2$};
+
+
+        \addplot coordinates  {(256, 0)     (576,32.1) (1024, 25.2) (2025, 25.8) (4096, 24.8)  (9216,32)};
+        \addplot+ coordinates {(256, 0)     (576,26.4) (1024, 23.4) (2025, 28.7) (4096, 31.7)  (9216,72)};
+        \addplot+ coordinates {(256, 0)     (576,66.4) (1024, 46  ) (2025, 40.7) (4096, 36.1)  (9216,86)};
+        \addplot+ coordinates {(256, 0)     (576,30.7) (1024, 26.8) (2025, 28.8) (4096, 29.4)  (9216,56)};
+	\end{axis}
+
+	% Re = 4000
+
+	\begin{axis}[bar shift=11pt]
+
+		\node[xshift=11pt,rotate=0] at (axis cs:256,12) {\scriptsize\color{red}\ding{55}};
+		\node[xshift=11pt,rotate=0] at (axis cs:576,12) {\scriptsize\color{red}\ding{55}};
+		\node[xshift=11pt,rotate=0] at (axis cs:1024,12) {\scriptsize\color{red}\ding{55}};
+		\node [mynodestyle]at([xshift=11pt]axis cs:2025,246) {$620$ $(5)$};
+		\node [mynodestyle]at([xshift=11pt]axis cs:4096,201) {$400$ $(4)$};
+		\node [mynodestyle]at([xshift=11pt]axis cs:9216,285) {$430$ $(5)$};
+		\node(fourRe) at ([xshift=11pt]axis cs:9216,15) {$4$};
+
+        \addplot+ coordinates { (256, 0) (576, 0) (1024, 0) (2025,33.8) (4096,26.6) (9216,33.7)}; 
+        \addplot+ coordinates { (256, 0) (576, 0) (1024, 0) (2025,39)  (4096,31.7) (9216,75)};   
+        \addplot+ coordinates { (256, 0) (576, 0) (1024, 0) (2025,72.5) (4096,50) (9216,125)};  
+        \addplot+ coordinates { (256, 0) (576, 0) (1024, 0) (2025,34.7) (4096,29.7) (9216,55.8)}; 
+
+    \node[anchor=south,text width=1.6cm] (gmres) at (axis cs:256,440){GMRES its. (Newton its.)};
+
+		\legend{
+			Inner solve,
+			Coarse solve,
+			GMRES,
+			Other
+		}
+
+	\end{axis}
+
+	\node[rotate=0, text width=1.8cm] (Re) at ([yshift=-20,xshift=30]fourRe){Re ($\times 10^{3}$)};
+
+	% \draw [thin] (gmres) --  (256);
+	\draw [thin] (gmres) --  (one);
+	% \draw [thin] (gmres) --  (three);
+
+	\draw [thin] (Re) --  (fourRe);
+
+\end{tikzpicture}

@@ -1,0 +1,60 @@
+\begin{tikzpicture}
+	\begin{groupplot}[
+			group style={group size=1 by 2, vertical sep=1.cm},
+			width=13cm, height=4cm,
+			xlabel={Iter.},
+			grid=major,
+			log basis y=10,
+			legend style={at={(1.0,0.9)},anchor=east},
+			xmin=0,
+			xmax=15,
+			ymin=1e-6,
+			ymax=1,
+			every axis plot/.append style={line width=1pt, mark size=1.5pt, mark=*},
+		]
+		\nextgroupplot[
+			ylabel={Rel. residual},
+			ymode=log,
+		]
+		\addplot coordinates {
+				(0, 1) (1, 0.000461063) (2, 0.000180623) (3, 7.69231e-05) (4, 4.67144e-05) (5, 2.75539e-05) (6, 1.50771e-06) (7, 6.3394e-09)
+			};
+		\addlegendentry{Re=500}
+		\addplot coordinates {
+				(0, 1) (1, 0.000683264) (2, 0.000480095) (3, 0.00037343) (4, 0.000345118) (5, 0.000341495) (6, 0.000339957) (7, 0.000339534) (8, 0.000414796) (9, 0.000364827) (10, 0.000333536) (11, 0.000317937) (12, 0.000275248) (13, 0.000256005) (14, 0.000254507) (15, 0.000254237) (16, 0.000262081) (17, 0.00025798) (18, 0.000261379) (19, 0.000260608)
+			};
+		\addlegendentry{Re=750}
+		\addplot coordinates {
+            (0, 1) (1, 0.000907096) (2, 0.000549946) (3, 0.000287238) (4, 0.000198314) (5, 0.000160798) (6, 0.000151072) (7, 0.000150393) (8, 0.000150489) (9, 0.000155954) (10, 0.000154682) (11, 0.000154337) (12, 0.000159684) (13, 0.000159413) (14, 0.000172403) (15, 0.000172074) (16, 0.000172708) (17, 0.000189149) (18, 0.000190431) (19, 0.000198664) 
+			};
+		\addlegendentry{Re=1000}
+
+
+		% Absolute residual plot
+		\nextgroupplot[
+			ylabel={Rel. residual},
+			ymode=log,
+		]
+		\addplot coordinates {
+				(0, 1) (1, 0.00361003) (2, 4.0282e-05) (3, 9.87625e-07)
+			};
+		\addlegendentry{$Re=500$}
+
+		\pgfplotsset{cycle list shift=1}
+		\addplot coordinates {
+				(0, 1) (1, 0.0783692) (2, 0.00100882) (3, 2.29151e-06)
+			};
+		\addlegendentry{$Re=1000$}
+
+		\pgfplotsset{cycle list shift=1}
+		\addplot coordinates {
+				(0, 1) (1, 0.0436383) (2, 0.00622051) (3, 6.42127e-05) (4, 9.38152e-07)
+			};
+		\addlegendentry{$Re=3000$}
+
+		\addplot coordinates {
+				(0, 1) (1, 0.0994514) (2, 0.0140707) (3, 0.00294689) (4, 0.000409486) (5, 1.93227e-05)
+			};
+		\addlegendentry{$Re=6000$}
+	\end{groupplot}
+\end{tikzpicture}

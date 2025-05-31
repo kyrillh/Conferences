@@ -1,7 +1,11 @@
-\subsection{2D lid-driven cavity}
+\section{Parallal implementation results}
+
+\begin{frame}{Software ecosystem}
+	\input{images/tikz/Software}
+\end{frame}
 
 \begin{frame}{Stationary and dimensionless Navier-Stokes equations}
-  \vspace{-5mm}
+	\vspace{-5mm}
 	\begin{columns}
 		\begin{column}{0.6\textwidth}%
 			\begin{align*}
@@ -9,14 +13,14 @@
 				{\rm div}(v)                                          & = 0 \;   & {\rm in} \; \Omega          \\
 				v                                                     & = v_0 \; & {\rm on} \; \partial \Omega
 			\end{align*}
-  \vspace{-4mm}
+			\vspace{-4mm}
 			\begin{itemize}
 				\item $v_0=(1,0)$ on the lid and zero everywhere else
-        \item $P_1\textrm{-}P_1\textrm{-}Stab$ (Bochev-Dohrmann) \footnotemark{}
+				\item $P_1\textrm{-}P_1\textrm{-}Stab$ (Bochev-Dohrmann) \footnotemark{}
 				\item Subdomain size: $150\times 150$ elements
 				\item Solver absolute and relative tolerances: \num{e-6}
-        \item RGDSW coarse space \footnotemark{}
-				\item Hybrid variant
+        \item RGDSW coarse space \footnotemark[6]$^,$\footnotemark[7]$^,$\footnotemark[8]$^,$\footnotemark[9]$^,$\footnotemark[10]
+                \item Hybrid variant
 			\end{itemize}
 		\end{column}
 		\begin{column}{0.4\textwidth}
@@ -27,8 +31,23 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
-  \footnotetext[5]{\tiny Dohrmann, Bochev (2004)}
-  \footnotetext{\tiny Dohrmann, Widlund (2017)}
+    {\let\thefootnote\relax\footnote{{\tiny \textsuperscript{5}Bochev, Dohrmann (2004),  \textsuperscript{6}Dohrmann, Widlund (2017), \textsuperscript{7}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{8}Disstertation Hochmuth (2021),\\\hspace{3em}\textsuperscript{9}Lanser, Klawonn (2024),  \textsuperscript{10}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
+\end{frame}
+
+\begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
+	\begin{figure}
+		\centering
+		\input{images/tikz/scalability-ldc-schwarz-current-jacobian.tex}
+		\label{fig:weak-scalability-nls}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
+	\begin{figure}
+		\centering
+		\input{images/tikz/scalability-ldc-schwarz-per-iter-current-jacobian.tex}
+		\label{fig:weak-scalability-per-iter-nls}
+	\end{figure}
 \end{frame}
 
 \begin{frame}{Lid-driven cavity: Newton-Krylov-Schwarz vs Hybrid}
@@ -37,24 +56,19 @@
 	\end{itemize}
 	\begin{figure}
 		\centering
-		\input{images/tikz/log-residual-plot-ldc.tex}
-		\label{fig:residual-ldc}
+		\input{images/tikz/log-residual-plot-ldc-current-jacobian-256.tex}
+		\label{fig:residual-ldc-256}
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
+\begin{frame}{Lid-driven cavity: Newton-Krylov-Schwarz vs Hybrid}
+	\begin{itemize}
+		\item $256$ subdomains
+	\end{itemize}
 	\begin{figure}
 		\centering
-		\input{images/tikz/scalability-ldc-schwarz.tex}
-		\label{fig:weak-scalability-nls}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
-	\begin{figure}
-		\centering
-		\input{images/tikz/scalability-ldc-schwarz-per-iter.tex}
-		\label{fig:weak-scalability-per-iter-nls}
+		\input{images/tikz/log-residual-plot-ldc-current-jacobian-4096.tex}
+		\label{fig:residual-ldc-4096}
 	\end{figure}
 \end{frame}
 
@@ -83,22 +97,24 @@
 	\end{itemize}
 	\begin{figure}
 		\centering
-		\input{images/tikz/rgdsw-vs-msfem-ldc-schwarz.tex}
+		\input{images/tikz/rgdsw-vs-msfem-ldc-schwarz-current-jacobian.tex}
 		\label{fig:msfem-vs-rgdsw}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Summary lid-driven cavity}
 	\begin{itemize}
-    \item Hybrid more robust than NKS against nonlinearity
-    \item It's weak scaling is excellent up to $4096$ subdomains\\then coarse solve time increases % (larger coarse space improves nonlinear preconditioning)
+		\item Hybrid more robust than NKS against nonlinearity
+		\item It's weak scaling is excellent up to $4096$ subdomains\\then coarse solve time increases % (larger coarse space improves nonlinear preconditioning)
 		\item It's difficult to tune e.g. what makes a good coarse space?%: many parameters that have a potentialy significant impact on performance
 	\end{itemize}
 
-	\begin{figure}
-		\includegraphics[width=0.55\textwidth]{images/nls.png}
-	\end{figure}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{images/nls.png}\\
+        {\tiny \vspace{-2mm}\hspace{-4.7cm}Generated with ChatGPT}
+    \end{center}
 	% Bottom line: very sensitive to proper tuning, The coarse space does not encode the Re somehow but it's discretisation properties are critical.
 \end{frame}
+
 
 

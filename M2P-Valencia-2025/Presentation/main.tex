@@ -26,8 +26,6 @@
 
 \useinnertheme[rounded]{tcolorbox}
 
-
-
 \usepackage{lmodern} 
 \usepackage{xcolor}
 \usepackage[T1]{fontenc}
@@ -70,8 +68,13 @@ citestyle=ieee
 \algtext*{EndWhile}% Remove "end while" text
 \algtext*{EndFor}% Remove "end if" text
 \addbibresource{references.bib}
-\input{images/tikz/tikz_config}
+\input{images/tikz/tikz-config}
 
+\DeclareCiteCommand{\footciteauthors}
+  {\usebibmacro{prenote}\footnote{}}
+  {\printnames{author}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
 \newcommand{\numgru}{\num[group-minimum-digits=3]}
 
 \title{\Large Parallel implementation of two-level \mbox{nonlinear} Schwarz domain decomposition methods}
@@ -105,16 +108,12 @@ citestyle=ieee
 
     \input{sections/1-theory}
 
-    \input{sections/3-neo-hooke}
+    \input{sections/2-ldc}
 
-    \input{sections/4-ldc}
-
-    \input{sections/5-outlook}
+    \input{sections/3-outlook}
     
-    \input{sections/6-end}
+    \input{sections/4-end}
 
-    \input{sections/7-backup}
-
-    \input{sections/2-nonlin-laplace}
+    \input{sections/5-backup}
 
 \end{document}
