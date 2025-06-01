@@ -87,33 +87,35 @@ citestyle=ieee
     \includegraphics[width=45pt]{images/logo/CDS_logo.pdf}
     \hspace{10pt}
     \includegraphics[width=45pt]{images/logo/Scalexa_logo_3-1.png}
+    \hspace{5pt}
+    \includegraphics[width=70pt]{images/logo/BMFTR.jpg}
 }
 
 \def\myitemsep{10pt}
 \def\mytikzpath{images/tikz}
 
 \begin{document}
-    \begin{frame}[noframenumbering,plain]
-        \titlepage
-    \end{frame}
-    % border around blocks
-    \tcbset{
-        boxrule=0.5pt,
-        frame style={draw,black!65!white}
-    }   
-    \input{sections/project}
-    \begin{frame}{Outline}
-        \tableofcontents
-    \end{frame}
+\begin{frame}[noframenumbering,plain]
+	\titlepage
+\end{frame}
+% border around blocks
+\tcbset{
+	boxrule=0.5pt,
+	frame style={draw,black!65!white}
+}
+\input{sections/project}
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
 
-    \input{sections/1-theory}
+\input{sections/1-theory}
 
-    \input{sections/2-ldc}
+\input{sections/2-ldc}
 
-    \input{sections/3-outlook}
-    
-    \input{sections/4-end}
+\input{sections/3-outlook}
 
-    \input{sections/5-backup}
+\input{sections/4-end}
+
+\input{sections/5-backup}
 
 \end{document}
