@@ -1,4 +1,4 @@
-\section{Parallal implementation results}
+\section{Parallel implementation results}
 
 \begin{frame}{Software ecosystem}
 	\input{images/tikz/Software}
@@ -19,7 +19,7 @@
 				\item $P_1\textrm{-}P_1\textrm{-}Stab$ (Bochev-Dohrmann) \footnotemark{}
 				\item Subdomain size: $150\times 150$ elements
 				\item Solver absolute and relative tolerances: \num{e-6}
-        \item RGDSW coarse space \footnotemark[6]$^,$\footnotemark[7]$^,$\footnotemark[8]$^,$\footnotemark[9]$^,$\footnotemark[10]
+        \item RGDSW coarse space \footnotemark[5]$^,$\footnotemark[6]$^,$\footnotemark[7]$^,$\footnotemark[8]$^,$\footnotemark[9]
                 \item Hybrid variant
 			\end{itemize}
 		\end{column}
@@ -31,7 +31,7 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
-    {\let\thefootnote\relax\footnote{{\tiny \textsuperscript{5}Bochev, Dohrmann (2004),  \textsuperscript{6}Dohrmann, Widlund (2017), \textsuperscript{7}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{8}Disstertation Hochmuth (2021),\\\hspace{3em}\textsuperscript{9}Lanser, Klawonn (2024),  \textsuperscript{10}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
+    {\let\thefootnote\relax\footnote{{\tiny \textsuperscript{4}Bochev, Dohrmann (2004),  \textsuperscript{5}Dohrmann, Widlund (2017), \textsuperscript{6}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{7}Dissertation Hochmuth (2021),\\\hspace{3em}\textsuperscript{8}Lanser, Klawonn (2024),  \textsuperscript{9}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
 \end{frame}
 
 \begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
@@ -50,10 +50,7 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Lid-driven cavity: Newton-Krylov-Schwarz vs Hybrid}
-	\begin{itemize}
-		\item $256$ subdomains
-	\end{itemize}
+\begin{frame}{LDC: Newton-Krylov-Schwarz vs Hybrid, 256 subdomains}
 	\begin{figure}
 		\centering
 		\input{images/tikz/log-residual-plot-ldc-current-jacobian-256.tex}
@@ -61,10 +58,7 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Lid-driven cavity: Newton-Krylov-Schwarz vs Hybrid}
-	\begin{itemize}
-		\item $4096$ subdomains
-	\end{itemize}
+\begin{frame}{LDC: Newton-Krylov-Schwarz vs Hybrid, 4096 subdomains}
 	\begin{figure}
 		\centering
 		\input{images/tikz/log-residual-plot-ldc-current-jacobian-4096.tex}
@@ -72,7 +66,7 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{LDC coarse basis functions}
+\begin{frame}{Lid-driven cavity coarse basis functions}
 	\begin{figure}
 		\centering
 		\begin{subfigure}{0.5\textwidth}
@@ -87,14 +81,11 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}{MsFEM vs. RGDSW}
+\begin{frame}{MsFEM vs. RGDSW, 256 subdomains}
 	% Mention that: 
 	%   - Re has no effect 
 	%   - MsFEM was faster for Re=1000 but maybe RGDSW can be sped up with proper tuning
 	%   - These results were generated with higher GMRES tollerance which increases GMRES count and runtime without a positive effect
-	\begin{itemize}
-		\item $256$ subdomains
-	\end{itemize}
 	\begin{figure}
 		\centering
 		\input{images/tikz/rgdsw-vs-msfem-ldc-schwarz-current-jacobian.tex}
@@ -104,9 +95,9 @@
 
 \begin{frame}{Summary lid-driven cavity}
 	\begin{itemize}
-		\item Hybrid more robust than NKS against nonlinearity
-		\item It's weak scaling is excellent up to $4096$ subdomains\\then coarse solve time increases % (larger coarse space improves nonlinear preconditioning)
-		\item It's difficult to tune e.g. what makes a good coarse space?%: many parameters that have a potentialy significant impact on performance
+		\item Hybrid is more robust than NKS against nonlinearity.
+		\item It's weak scaling is excellent up to $4096$ subdomains\\then coarse solve time increases. % (larger coarse space improves nonlinear preconditioning)
+		\item It's difficult to tune, e.g., what makes a good coarse space?%: many parameters that have a potentialy significant impact on performance
 	\end{itemize}
 
     \begin{center}

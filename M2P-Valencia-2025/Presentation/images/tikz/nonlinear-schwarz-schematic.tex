@@ -13,16 +13,16 @@
      \node[inner sep=0] (bottomRectangle) at (bottomImg) 
         {\includegraphics[width=5cm]{images/local-solutions.png}};
     
-    \node[fill=white, fill opacity=0.7, text opacity=1, yshift=5mm, xshift=2mm, text width = 35mm] at (leftRectangle.north) {\small Discretized nonlinear problem};
-    \node[yshift=0cm, fill=white, fill opacity=0.9, text opacity=1] at (leftRectangle.south) {\small $F(u) = 0$};
+    \node[yshift=5mm, xshift=2mm, text width = 35mm, font=\small] at (leftRectangle.north) {Discretized nonlinear problem};
+    \node[yshift=-2mm, font=\small] at (leftRectangle.south) {$F(u) = 0$};
 
-    \node[yshift=0cm, fill=white, fill opacity=0.9, text opacity=1] at (bottomRectangle.south) {\small $R_i F\left(\bm{u} - R_i^T T_i(\bm{u})\right) = 0$};
+    \node[yshift=-2mm, font=\small] at (bottomRectangle.south) {$R_i F\left(u - P_i T_i(u)\right) = 0$};
     
-    \node [fill=white, fill opacity=0.9, text opacity=1] at (topRectangle.south){\small $\Phi^T F\left(\bm{u} - \Phi T_0(\bm{u})\right) = 0$};
+    \node [yshift=-2mm, font=\small] at (topRectangle.south){$R_0 F\left(u - P_0 T_0(u)\right) = 0$};
     
-    \node[align=left, fill=white, fill opacity=0.7, text opacity=1, text width = 4.5cm] at (9.6,-1.3){\small Solve with Newton's method for nonlinear corrections $T_i(u), \quad i = 0,\ldots, N$};
+    \node[align=left, text width = 4.5cm, font=\small] at (9.6,-1.3){Solve with Newton's method for nonlinear corrections $T_i(u) \text{ for } i = 1,2,\dots,N$};
     
-    \node[draw, rectangle, minimum width=4cm, minimum height=1cm] (boxedEq) at (rightEq) {\small $\mathcal{F}(\bm{u}) = \sum_{i=0}^{N} R_i^T T_i(\bm{u})$};
+    \node[draw, rectangle, minimum width=4cm, minimum height=1cm, font=\small] (boxedEq) at (rightEq) {$\mathcal{F}(u) = \sum_{i=0}^{N} P_i T_i(u) = 0$};
     
     % Arrows
     \draw[-{Stealth[length=3mm, width=2mm]}] ($(leftRectangle.north east) + (-0.5, -0.5)$) -- ($(topRectangle.south west) + (0.3, 0.3)$);

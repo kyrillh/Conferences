@@ -1,97 +1,138 @@
 \section{Introduction to nonlinear Schwarz methods}
-
-\begin{frame}{Motivation: linear vs nonlinear preconditioning}
+\begin{frame}{Nonlinear domain decomposition methods}
 	Discretized nonlinear partial differential equation: $F(u) = 0$
-	\begin{columns}
-		\begin{column}{0.5\textwidth}
-			\vspace*{-4mm}
-			\begin{block}{\normalsize Linear preconditioner}
-				\begin{enumerate}
-					\item Linearize:
-					      \begin{equation*}
-						      DF(u^k)\delta^{k+1} = F(u^k)
-					      \end{equation*}
-					\item Improve linear solver performance with Schwarz preconditioner:
-					      \begin{equation*}
-						      \mathcal{M}_{OS}^{-1}DF(u^k)\delta^{k+1} = \mathcal{M}_{OS}^{-1}F(u^k)
-					      \end{equation*}
-				\end{enumerate}
-				\vspace*{4mm}
-				Goal:
-				\begin{itemize}
-					\item $\kappa(\mathcal{M}_{OS}^{-1}DF(u^k)) \approx 1$
-				\end{itemize}
-			\end{block}
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			\vspace*{-4mm}
-			\begin{block}{\normalsize Nonlinear preconditioner}
-				\begin{enumerate}
-					\item Reformulate the original nonlinear problem based on local nonlinear corrections
-					      \begin{equation}
-						      \mathcal{F}(u) = G(F(u)) = 0
-					      \end{equation}
-					\item Linearize $\mathcal{F}(u) = 0$ and solve iterativily
-				\end{enumerate}
-				Goal:
-				\begin{itemize}
-					\item $\mathcal{F}(u)$ more linear than $F(u)$
-					\item $\mathcal{F}(u^*) = 0 \iff F(u^*) = 0$
-				\end{itemize}
-			\end{block}
-		\end{column}
-	\end{columns}
+	\begin{block}{\normalsize Classical approach}
+		\begin{tikzpicture}[node distance=7cm]
+			% \node[inner sep=0pt] (one) at (-5,1.5){\Large\emph{\underline{Classical approach}}};
+			\node[inner sep=0pt] (one) at (-5,0)
+			{\includegraphics[width=2.9cm]{images/eps/rechteckring58534p_64001.pdf}};
+
+			\node[inner sep=0pt] (two) at (-1,0)
+			{\includegraphics[width=2.2cm]{images/eps/rechteckring58534p_copy008.pdf}};
+			\node[inner sep=0pt] (three) at (2.7,0)
+			{\includegraphics[width=2.0cm]{images/eps/exploded_5004_entsaettigt3.pdf}};
+			\node[inner sep=0pt] (four) at (6,0)
+			{\includegraphics[width=2.3cm]{images/eps/rechteckring58534p_copy_entsaettigt3003.pdf}};
+
+			\draw [arrow] (one) -- node[anchor=south] {\bf Linearize} (two);
+			\draw [arrow] (two) -- node[anchor=south] {\bf Decompose} (three);
+			\draw [arrow] (three) -- node[anchor=south] {\bf Build prec.} (four);
+		\end{tikzpicture}
+	\end{block}
+	\begin{block}{\normalsize Nonlinear DD approach}
+		\begin{tikzpicture}[node distance=2cm]
+			% \node[inner sep=0pt] (one) at (-4.4,1.5){\Large\emph{\underline{Nonlinear DD approach}}};
+			\node[inner sep=0pt] (one) at (-5,0)
+			{\includegraphics[width=2.9cm]{images/eps/rechteckring58534p_64001.pdf}};
+
+			\node[inner sep=0pt] (two) at (-1,0)
+			{\includegraphics[width=2.0cm]{images/eps/exploded_5004.pdf}};
+			\node[inner sep=0pt] (three) at (2.7,0)
+			{\includegraphics[width=2.3cm]{images/eps/rechteckring58534p_copy003.pdf}};
+			\node[inner sep=0pt] (four) at (6,0)
+			{\includegraphics[width=2.3cm]{images/eps/rechteckring58534p_copy_entsaettigt3003.pdf}};
+
+
+			\draw [arrow] (one) -- node[anchor=south] {\bf Decompose} (two);
+			\draw [arrow, align=center, text width=2.3cm] (two) -- node[anchor=south] {\bf Build \mbox{alternative} problem} (three);
+			\draw [arrow] (three) -- node[anchor=south] {\bf Linearize} (four);
+		\end{tikzpicture}
+	\end{block}
 \end{frame}
 
 \begin{frame}{Some References on Nonlinear Domain Decomposition Methods}
-\tiny
-\textbf{Nonlinear FETI-DP and Nonlinear BDDC:}\\
-Klawonn, Lanser, Rheinbach (2012, 2013, 2014, 2015, 2016, 2018), Klawonn, Lanser, Rheinbach, Uran (2017, 2018), Klawonn Lanser, Uran (2021, 2023), \dots\\~\\
+	\tiny
+	\textbf{Nonlinear FETI-DP and Nonlinear BDDC:}\\
+	Klawonn, Lanser, Rheinbach (2012, 2013, 2014, 2015, 2016, 2018), Klawonn, Lanser, Rheinbach, Uran (2017, 2018), Klawonn Lanser, Uran (2021, 2023), \dots\\~\\
 
-\textbf{Nonlinear Elimination:}\\
-Hwang, Lin, Cai (2010); Cai, Li (2011); Wang, Su, Cai (2015); Hwang, Su, Cai (2016); Gong, Cai (2018); Luo, Shiu, Chen, Cai (2019); Gong, Cai (2019); Liu, Hwang, Luo, Cai, Keyes (2022), \dots\\~\\
+	\textbf{Nonlinear Elimination:}\\
+	Hwang, Lin, Cai (2010); Cai, Li (2011); Wang, Su, Cai (2015); Hwang, Su, Cai (2016); Gong, Cai (2018); Luo, Shiu, Chen, Cai (2019); Gong, Cai (2019); Liu, Hwang, Luo, Cai, Keyes (2022), \dots\\~\\
 
-\textbf{ASPIN:}\\
-Cai, Keyes 2002; Cai, Keyes, Marcinkowski 2002; Hwang, Cai 2005, 2007; Groß, Krause (2010, 2013), \dots\\~\\
+	\textbf{ASPIN:}\\
+	Cai, Keyes 2002; Cai, Keyes, Marcinkowski 2002; Hwang, Cai 2005, 2007; Groß, Krause (2010, 2013), \dots\\~\\
 
-\textbf{MSPIN and Field-split methods:}\\
-Keyes, Liu, (2015, 2016,2021); Liu, Wei, Keyes (2017); Kopanicáková, Kothari, Krause (2023), \dots\\~\\
+	\textbf{MSPIN and Field-split methods:}\\
+	Keyes, Liu, (2015, 2016,2021); Liu, Wei, Keyes (2017); Kopanicáková, Kothari, Krause (2023), \dots\\~\\
 
-\textbf{RASPEN:}\\
-Dolean, Gander, Kherijii, Kwok, Masson (2016)\\~\\
+	\textbf{RASPEN:}\\
+	Dolean, Gander, Kherijii, Kwok, Masson (2016)\\~\\
 
-\textbf{Nonlinear 2-Level Schwarz:}\\
-Heinlein, Lanser (2020); Heinlein, Klawonn, Lanser (2022)\\~\\
+	\textbf{Nonlinear 2-Level Schwarz:}\\
+	Heinlein, Lanser (2020); Heinlein, Klawonn, Lanser (2022)\\~\\
 
-\textbf{Nonlinear Neumann-Neumann:}\\ Bordeu, Boucard, Gosselet 2009\\~\\
+	\textbf{Nonlinear Neumann-Neumann:}\\ Bordeu, Boucard, Gosselet 2009\\~\\
 
-\textbf{Nonlinear FETI-1:}\\
-Pebrel, Rey, Gosselet 2008; Negrello, Gosselet, Rey (2021)\\~\\
+	\textbf{Nonlinear FETI-1:}\\
+	Pebrel, Rey, Gosselet 2008; Negrello, Gosselet, Rey (2021)\\~\\
 
-\textbf{Other DD work reversing linearization and decomposition:}\\
-Ganis, Juntunen, Pencheva, Wheeler, Yotov 2014; Ganis, Kumar, Pencheva, Wheeler, Yotov 2014
+	\textbf{Other DD work reversing linearization and decomposition:}\\
+	Ganis, Juntunen, Pencheva, Wheeler, Yotov 2014; Ganis, Kumar, Pencheva, Wheeler, Yotov 2014
 \end{frame}
+
+% \begin{frame}{Motivation: linear vs nonlinear preconditioning}
+% 	Discretized nonlinear partial differential equation: $F(u) = 0$
+% 	\begin{columns}
+% 		\begin{column}{0.5\textwidth}
+% 			\vspace*{-4mm}
+% 			\begin{block}{\normalsize Linear preconditioner}
+% 				\begin{enumerate}
+% 					\item Linearize:
+% 					      \begin{equation*}
+% 						      DF(u^k)\delta^{k+1} = F(u^k)
+% 					      \end{equation*}
+%                       \item Improve linear solver performance with e.g. linear-left preconditioner $\mathcal{M}$:
+% 					      \begin{equation*}
+% 						      \mathcal{M}^{-1}DF(u^k)\delta^{k+1} = \mathcal{M}^{-1}F(u^k)
+% 					      \end{equation*}
+% 				\end{enumerate}
+% 				\vspace*{4mm}
+% 				Goal:
+% 				\begin{itemize}
+% 					\item $\kappa(\mathcal{M}^{-1}DF(u^k)) \approx 1$
+% 				\end{itemize}
+% 			\end{block}
+% 		\end{column}
+% 		\begin{column}{0.5\textwidth}
+% 			\vspace*{-4mm}
+% 			\begin{block}{\normalsize Nonlinear preconditioner}
+% 				\begin{enumerate}
+% 					\item Reformulate the original nonlinear problem based on local nonlinear corrections
+% 					      \begin{equation}
+% 						      \mathcal{F}(u) = G(F(u)) = 0
+% 					      \end{equation}
+% 					\item Linearize $\mathcal{F}(u) = 0$ and solve iterativily
+% 				\end{enumerate}
+% 				Goal:
+% 				\begin{itemize}
+% 					\item $\mathcal{F}(u)$ more linear than $F(u)$
+% 					\item $\mathcal{F}(u^*) = 0 \iff F(u^*) = 0$
+% 				\end{itemize}
+% 			\end{block}
+% 		\end{column}
+% 	\end{columns}
+% \end{frame}
 
 \begin{frame}{One-level nonlinear Schwarz \footnote{\tiny Cai and Keyes 2002}}%: Nonlinearly preconditioned inexact Newton algorithms}}
 	% \only<1-3>{
-		Discretized nonlinear partial differential equation: F (u) = 0
-	    \vspace*{-5mm}
+	Discretized nonlinear partial differential equation: $F(u) = 0$
+	\vspace*{-5mm}
 	% }
 	% \only<4->{
 	%     \vspace*{-10mm}
 	% }
 
 	\begin{columns}
-		\begin{column}{0.5\textwidth}
+		\begin{column}{0.47\textwidth}
 			\begin{block}<1->{\normalsize Nonlinear corrections $T_i(u): V\mapsto V_i$}
 				\vspace*{-5mm}
 				\begin{align*}
-					 & R_iF(u-P_iT_i(u))  = 0, \quad i = 1,2,\dots N                \\
+					 & R_iF(u-P_iT_i(u))  = 0, \quad i = 1,2,\dots,N                \\
 					 & \text{with}\quad R_i:V\mapsto V_i\text{,}\, P_i:V_i\mapsto V
 				\end{align*}
 			\end{block}
 		\end{column}
-		\begin{column}{0.5\textwidth}
+        \hspace{-3mm}
+		\begin{column}{0.47\textwidth}
 			\begin{block}<2->{\normalsize Define an alternative nonlinear problem}
 				\begin{equation*}
 					\mathcal{F}_1(u) \coloneqq \sum_{i=1}^N\alert<4>{P_iT_i(u)} = 0
@@ -99,12 +140,17 @@ Ganis, Juntunen, Pencheva, Wheeler, Yotov 2014; Ganis, Kumar, Pencheva, Wheeler,
 			\end{block}
 		\end{column}
 	\end{columns}
-	\begin{block}<3->{\normalsize Nonlinear Schwarz method results by solving $\mathcal{F}_1(u) = 0$ with Newton's method.\newline Setting $u_i = u-P_iT_i(u)$ the Jacobian can be formulated as:}
-		\vspace*{-2mm}
-		\begin{align*}
-			D\mathcal{F}_1(u^k)  = \sum_{i = 1}^NP_iDT_i(u^k) = \sum_{i=1}^N\alert<4>{P_i(R_iDF(u_i^k)P_i)^{-1}R_iDF(u_i^k)}
-		\end{align*}
-	\end{block}
+	% \begin{columns}
+	% 	\begin{column}{1.02\textwidth}
+			\begin{block}<3->{\normalsize Nonlinear Schwarz method results by solving $\mathcal{F}_1(u) = 0$ with Newton's method.\newline Setting $u_i = u-P_iT_i(u)$ the Jacobian can be formulated as:}
+				\vspace*{-2mm}
+				\begin{align*}
+					D\mathcal{F}_1(u^k)  = \sum_{i = 1}^NP_iDT_i(u^k) = \sum_{i=1}^N\alert<4>{P_i(R_iDF(u_i^k)P_i)^{-1}R_iDF(u_i^k)}
+				\end{align*}
+			\end{block}
+	% 	\end{column}
+	% \end{columns}
+
 	\only<4>{%
 		\tikz[overlay,remember picture]
 		\node[fill=white,text=red] at ([xshift=0cm,yshift=-3cm]current page.center){\Large Parallel execution!};
@@ -117,67 +163,22 @@ Ganis, Juntunen, Pencheva, Wheeler, Yotov 2014; Ganis, Kumar, Pencheva, Wheeler,
 	% }
 \end{frame}
 
-\begin{frame}{Adding a second level}
-	Build coarse space basis functions $\rightarrow$ $R_0$ and $P_0$ 
-    \begin{block}{RGDSW coarse space \footnotemark{}}
-		Define coarse basis $\Phi : V_0\mapsto V$
-		\begin{enumerate}
-			\setlength{\itemsep}{10pt}
-			\item Build $\Phi_\Gamma$ as a partition of unity on the interface $\Gamma$
-			\item $\Phi_I = -A_{II}^{-1}A_{I\Gamma}\Phi_\Gamma$ an energy minimizing extension into the interior
-		\end{enumerate}
-	\end{block}
-	\only<2>{ % Compile twice for proper placement
-		For example:
-		\begin{columns}
-			\begin{column}{0.39\textwidth}
-				\vspace*{-6mm}
-				\begin{figure}
-					\includegraphics[width=0.45\textwidth]{images/decomposed_domain.jpg}
-				\end{figure}
-			\end{column}
-            \hspace*{-20mm}
-			\begin{column}{0.4\textwidth}
-				\vspace*{-9mm}
-				\begin{figure}
-					\includegraphics[width=0.65\textwidth]{images/r22.png}
-				\end{figure}
-			\end{column}
-		\end{columns}
-	}
-	\only<3>{
-		Summary:
-		\begin{equation*}
-			\Phi =
-			\begin{pmatrix}
-				\Phi_I \\  \Phi_\Gamma
-			\end{pmatrix} =
-			\begin{pmatrix}
-				-A_{II}^{-1}A_{I\Gamma}\Phi_\Gamma \\ \Phi_\Gamma
-			\end{pmatrix}
-		\end{equation*}
-		and
-		\begin{equation*}
-			P_0 \coloneqq \Phi\text{,}\quad R_0 \coloneqq \Phi^T
-		\end{equation*}
-	}
-\footnotetext{\tiny Dohrmann, Widlund (2017)}
-\end{frame}
-
 \begin{frame}{Two-level additive nonlinear Schwarz \footnote{\tiny Heinlein, Lanser (2020)} \footnote{\tiny Heinlein, Lanser, Klawonn (2022)}}
 	% \vspace*{-5mm}
 	\begin{columns}
-		\begin{column}{0.5\textwidth}
+		\begin{column}{0.47\textwidth}
 			\begin{block}{\normalsize Nonlinear corrections $T_i(u)$}
-				\vspace*{-1mm}
+				\vspace*{-4mm}
 				\begin{align*}
-					 & R_iF(u-P_iT_i(u))  = 0, \quad i = \alert{0},1,2,\dots N      \\
+					 & R_iF(u-P_iT_i(u))  = 0, \quad i = \alert{0},1,\dots,N      \\
 					 & \text{with}\quad R_i:V\mapsto V_i\text{,}\, P_i:V_i\mapsto V
 				\end{align*}
 			\end{block}
 		\end{column}
-		\begin{column}{0.5\textwidth}
+        \hspace{-3mm}
+		\begin{column}{0.47\textwidth}
 			\begin{block}{\normalsize Alternative nonlinear problem}
+				\vspace*{-4mm}
 				\begin{equation*}
 					\mathcal{F}_A(u) \coloneqq \alert{P_0T_0(u)} + \sum_{i=1}^NP_iT_i(u) = 0
 				\end{equation*}
@@ -192,7 +193,7 @@ Ganis, Juntunen, Pencheva, Wheeler, Yotov 2014; Ganis, Kumar, Pencheva, Wheeler,
 	\end{block}
 \end{frame}
 
-\begin{frame}{Two-level hybrid nonlinear Schwarz  \footnote[3]{\tiny Heinlein, Lanser (2020)} \footnote[4]{\tiny Heinlein, Lanser, Klawonn (2022)}}
+\begin{frame}{Two-level hybrid nonlinear Schwarz  \footnote[2]{\tiny Heinlein, Lanser (2020)} \footnote[3]{\tiny Heinlein, Lanser, Klawonn (2022)}}
 	\vspace*{-5mm}
 	\begin{block}{\normalsize Alternative nonlinear problem}
 		\begin{equation*}
@@ -212,6 +213,6 @@ Ganis, Juntunen, Pencheva, Wheeler, Yotov 2014; Ganis, Kumar, Pencheva, Wheeler,
 	\end{block}
 \end{frame}
 
-\begin{frame}{Nonlinear Schwarz}%: Nonlinearly preconditioned inexact Newton algorithms}}
-    \input{images/tikz/nonlinear-schwarz-schematic.tex}
+\begin{frame}{Two-level nonlinear Schwarz}%: Nonlinearly preconditioned inexact Newton algorithms}}
+	\input{images/tikz/nonlinear-schwarz-schematic.tex}
 \end{frame}

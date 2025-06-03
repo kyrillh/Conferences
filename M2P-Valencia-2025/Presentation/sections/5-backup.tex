@@ -69,7 +69,52 @@
 	\end{columns}
 \end{frame}
 
-
+\begin{frame}[noframenumbering]{Adding a second level}
+	Build coarse space basis functions $\rightarrow$ $R_0$ and $P_0$ 
+    \begin{block}{RGDSW coarse space \footnotemark{}}
+		Define coarse basis $\Phi : V_0\mapsto V$
+		\begin{enumerate}
+			\setlength{\itemsep}{10pt}
+			\item Build $\Phi_\Gamma$ as a partition of unity on the interface $\Gamma$
+			\item $\Phi_I = -A_{II}^{-1}A_{I\Gamma}\Phi_\Gamma$ an energy minimizing extension into the interior
+		\end{enumerate}
+	\end{block}
+	\only<2>{ % Compile twice for proper placement
+		For example:
+		\begin{columns}
+			\begin{column}{0.39\textwidth}
+				\vspace*{-6mm}
+				\begin{figure}
+					\includegraphics[width=0.45\textwidth]{images/decomposed_domain.jpg}
+				\end{figure}
+			\end{column}
+            \hspace*{-20mm}
+			\begin{column}{0.4\textwidth}
+				\vspace*{-9mm}
+				\begin{figure}
+					\includegraphics[width=0.65\textwidth]{images/r22.png}
+				\end{figure}
+			\end{column}
+		\end{columns}
+	}
+	\only<3>{
+		Summary:
+		\begin{equation*}
+			\Phi =
+			\begin{pmatrix}
+				\Phi_I \\  \Phi_\Gamma
+			\end{pmatrix} =
+			\begin{pmatrix}
+				-A_{II}^{-1}A_{I\Gamma}\Phi_\Gamma \\ \Phi_\Gamma
+			\end{pmatrix}
+		\end{equation*}
+		and
+		\begin{equation*}
+			P_0 \coloneqq \Phi\text{,}\quad R_0 \coloneqq \Phi^T
+		\end{equation*}
+	}
+\footnotetext{\tiny Dohrmann, Widlund (2017)}
+\end{frame}
 
 \begin{frame}[noframenumbering]{Motivation: linear vs nonlinear preconditioning}
 	Discretized nonlinear partial differential equation: $F(u) = 0$
@@ -352,43 +397,3 @@
       \input{\mytikzpath/weak-scaling-nonlin-laplace.tex}
   \end{figure}
  \end{frame}
-
-% \begin{frame}{Nonlinear domain decomposition methods}
-% 	\begin{tikzpicture}[node distance=7cm]
-%
-% 		\node[inner sep=0pt] (one) at (-5,1.5){\Large\emph{\underline{Classical approach}}};
-% 		\node[inner sep=0pt] (one) at (-5,0)
-% 		{\includegraphics[width=2.9cm]{images/eps/rechteckring58534p_64001.pdf}};
-%
-% 		\node[inner sep=0pt] (two) at (-1,0)
-% 		{\includegraphics[width=2.2cm]{images/eps/rechteckring58534p_copy008.pdf}};
-% 		\node[inner sep=0pt] (three) at (2.7,0)
-% 		{\includegraphics[width=2.0cm]{images/eps/exploded_5004_entsaettigt3.pdf}};
-% 		\node[inner sep=0pt] (four) at (6,0)
-% 		{\includegraphics[width=2.3cm]{images/eps/rechteckring58534p_copy_entsaettigt3003.pdf}};
-%
-% 		\draw [arrow] (one) -- node[anchor=south] {\bf Linearize} (two);
-% 		\draw [arrow] (two) -- node[anchor=south] {\bf Decompose} (three);
-% 		\draw [arrow] (three) -- node[anchor=south] {\bf Build prec.} (four);
-% 	\end{tikzpicture}
-%
-% 	\vspace*{1cm}
-% 	\begin{tikzpicture}[node distance=2cm]
-%
-% 		\node[inner sep=0pt] (one) at (-4.4,1.5){\Large\emph{\underline{Nonlinear DD approach}}};
-% 		\node[inner sep=0pt] (one) at (-5,0)
-% 		{\includegraphics[width=2.9cm]{images/eps/rechteckring58534p_64001.pdf}};
-%
-% 		\node[inner sep=0pt] (two) at (-1,0)
-% 		{\includegraphics[width=2.0cm]{images/eps/exploded_5004.pdf}};
-% 		\node[inner sep=0pt] (three) at (2.7,0)
-% 		{\includegraphics[width=2.3cm]{images/eps/rechteckring58534p_copy003.pdf}};
-% 		\node[inner sep=0pt] (four) at (6,0)
-% 		{\includegraphics[width=2.3cm]{images/eps/rechteckring58534p_copy_entsaettigt3003.pdf}};
-%
-%
-% 		\draw [arrow] (one) -- node[anchor=south] {\bf Decompose} (two);
-% 		\draw [arrow, align=center, text width=2.3cm] (two) -- node[anchor=south] {\bf Build \mbox{alternative} problem} (three);
-% 		\draw [arrow] (three) -- node[anchor=south] {\bf Linearize} (four);
-% 	\end{tikzpicture}
-% \end{frame}
