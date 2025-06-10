@@ -9,14 +9,14 @@
 	\begin{columns}
 		\begin{column}{0.6\textwidth}%
 			\begin{align*}
-				-\frac{1}{Re} \Delta v + (v \cdot \nabla)v + \nabla p & = 0 \;   & {\rm in}\; \Omega           \\
+				-\frac{1}{\rm Re} \Delta v + (v \cdot \nabla)v + \nabla p & = 0 \;   & {\rm in}\; \Omega           \\
 				{\rm div}(v)                                          & = 0 \;   & {\rm in} \; \Omega          \\
 				v                                                     & = v_0 \; & {\rm on} \; \partial \Omega
 			\end{align*}
 			\vspace{-4mm}
 			\begin{itemize}
 				\item $v_0=(1,0)$ on the lid and zero everywhere else
-				\item $P_1\textrm{-}P_1\textrm{-}Stab$ (Bochev-Dohrmann) \footnotemark{}
+                \item $\mathcal{P}$1-$\mathcal{P}$1-Stab (Bochev-Dohrmann) \footnotemark{}
 				\item Subdomain size: $150\times 150$ elements
 				\item Solver absolute and relative tolerances: \num{e-6}
         \item RGDSW coarse space \footnotemark[5]$^,$\footnotemark[6]$^,$\footnotemark[7]$^,$\footnotemark[8]$^,$\footnotemark[9]
@@ -31,7 +31,7 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
-    {\let\thefootnote\relax\footnote{{\tiny \textsuperscript{4}Bochev, Dohrmann (2004),  \textsuperscript{5}Dohrmann, Widlund (2017), \textsuperscript{6}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{7}Dissertation Hochmuth (2021),\\\hspace{3em}\textsuperscript{8}Lanser, Klawonn (2024),  \textsuperscript{9}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
+    {\let\thefootnote\relax\footnote{{\tiny \!\!\!\!\textsuperscript{4}Bochev, Dohrmann (2004),  \textsuperscript{5}Dohrmann, Widlund (2017), \textsuperscript{6}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{7}Dissertation Hochmuth (2021),\\\hspace{3em}\!\!\!\!\!\!\textsuperscript{8}Lanser, Klawonn (2024),  \textsuperscript{9}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
 \end{frame}
 
 \begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
@@ -71,13 +71,13 @@
 		\centering
 		\begin{subfigure}{0.5\textwidth}
 			\includegraphics[width=\textwidth]{images/RGDSW-x}
-			\caption{RGDSW $x$ component.}
+			\caption{RGDSW $x$-component.}
 		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\includegraphics[width=\textwidth]{images/MsFEM-x}
-			\caption{MsFEM $x$ component.}
+			\caption{MsFEM $x$-component.}
 		\end{subfigure}
-		\caption{Components of $x$ velocity coarse basis function.}
+		\caption{Components of $x$-velocity coarse basis function.}
 	\end{figure}
 \end{frame}
 

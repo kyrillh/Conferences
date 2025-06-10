@@ -197,13 +197,13 @@
 	\vspace*{-5mm}
 	\begin{block}{\normalsize Alternative nonlinear problem}
 		\begin{equation*}
-			\mathcal{F}_{hybrid}(u) \coloneqq \sum_{i=1}^NP_iT_i(u-P_0T_0(u)) + P_0T_0(u),
+            \mathcal{F}_{\text{hybrid}}(u) \coloneqq \sum_{i=1}^NP_iT_i(u-P_0T_0(u)) + P_0T_0(u),
 		\end{equation*}
 	\end{block}
 	\begin{block}{\normalsize The Jacobian}
 		\vspace*{-2mm}
 		\begin{equation*}
-			D\mathcal{F}_{hybrid}(u^k) = I - \left(I-\sum_{i=1}^NQ_i(v_i)\right)(I-Q_0(u_0))
+            D\mathcal{F}_{\text{hybrid}}(u^k) = I - \left(I-\sum_{i=1}^NQ_i(v_i)\right)(I-Q_0(u_0))
 		\end{equation*}
 		\begin{align*}
 			\text{with}\quad Q_i(u) & \coloneqq P_i(R_iDF(u)P_i)^{-1}R_iDF(u), \\
