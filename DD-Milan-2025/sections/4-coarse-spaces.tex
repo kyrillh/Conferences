@@ -1,0 +1,84 @@
+\section{Coarse spaces}
+\begin{frame}{Lid-driven cavity coarse basis functions}
+	\begin{figure}
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\includegraphics[width=\textwidth]{images/RGDSW-x}
+			\caption{RGDSW $x$-component.}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\includegraphics[width=\textwidth]{images/MsFEM-x}
+			\caption{MsFEM $x$-component.}
+		\end{subfigure}
+		\caption{Components of $x$-velocity coarse basis function.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{MsFEM vs. RGDSW, 256 subdomains}
+	% Mention that: 
+	%   - Re has no effect 
+	%   - MsFEM was faster for Re=1000 but maybe RGDSW can be sped up with proper tuning
+	%   - These results were generated with higher GMRES tollerance which increases GMRES count and runtime without a positive effect
+	\begin{figure}
+		\centering
+		\input{images/tikz/rgdsw-vs-msfem-ldc-schwarz-current-jacobian.tex}
+		\label{fig:msfem-vs-rgdsw}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Hyperelasticity coarse basis modification}
+	\centering
+	\vspace{10mm}
+	\only<1>{
+		\input{images/tikz/beam-instability-1.tex}
+	}
+	\only<2>{
+		\input{images/tikz/beam-instability-2.tex}
+	}
+\end{frame}
+
+\begin{frame}{Hyperelasticity coarse basis modification}
+	\begin{figure}[h!]
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-1.png}
+			\caption{\hspace{-20mm}Side view original}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-2.png}
+            \caption{\hspace{-20mm}Top view original}
+		\end{subfigure}
+		\vfill
+		\visible<2->{
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-3.png}
+                \caption{\hspace{-20mm}Side view modified}
+			\end{subfigure}
+			\hfill
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-4.png}
+                \caption{\hspace{-20mm}Top view modified}
+			\end{subfigure}
+        }
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Summary}
+	\begin{itemize}
+		\item The two-level nonlinear Schwarz method is highly sensitive to variations in the coarse space.
+		\item It's difficult to tune, e.g., what makes a good coarse space?%: many parameters that have a potentialy significant impact on performance
+	\end{itemize}
+	\vspace{4mm}
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/nls.png}\\
+		{\tiny \vspace{-2mm}\hspace{-4.7cm}Generated with ChatGPT}
+	\end{center}
+	% Bottom line: very sensitive to proper tuning, The coarse space does not encode the Re somehow but it's discretisation properties are critical.
+\end{frame}
+
+
+

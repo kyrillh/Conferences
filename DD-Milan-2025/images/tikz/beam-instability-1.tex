@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+	\node[anchor=north west] (main) at (0, 0) {\includegraphics[width=0.65\textwidth]{images/beam-entire.png}};
+	\node[anchor=south west,outer sep=0pt] (zoom) at (10.5, -3) {\includegraphics[width=0.15\textwidth]{images/beam-instability.png}};
+	\node [draw, thick, minimum size=5mm,outer sep=0pt,red] (a) at ([xshift=-4mm,yshift=4mm]main.east){};
+
+	\draw [thick, dashed] (a.north east) -- ([yshift=-2mm]zoom.north west);
+	\draw [thick, dashed] (a.south east) -- ([yshift=2mm]zoom.south west);
+\end{tikzpicture}

@@ -1,0 +1,115 @@
+\begin{tikzpicture}
+	\pgfplotsset{
+		every axis/.append style={
+				legend style={at={(1,1)},anchor=north east},
+				axis lines*=left, ymajorgrids, yminorgrids,
+				width=13.8cm, height=7cm,
+				ymin=0,
+				ymax=13,
+				ybar stacked,
+				bar width=8pt,
+				minor y tick num=1,
+				symbolic x coords={1,2,3,4,5,6},
+				xtick={1,2,3,4,5,6},
+				xticklabels from table={\hybrid}{Force},
+				xticklabel style={rotate=0,xshift=0ex,anchor=north},
+				ylabel={Runtime (seconds)},
+				xlabel={Force in MN/m$^{2}$},
+				cycle list name=Set2-5,
+			},
+		every axis plot/.append style={fill},
+	}
+
+	\tikzstyle{mynodestyle} = [rotate=90, anchor=west]
+
+	\pgfplotstableread{
+		Location Force  GlobalSolve   InnerSolve   CoarseSolve   GMRES    Other
+		1        4      6.9           2.73         2.2           0.58     1.39
+		2        4.5    7.3           3.2          2.1           0.59     1.41
+		3        5      6.8           2.7          2.2           0.57     1.33
+		4        6      7.1           2.9          2.2           0.61     1.39
+		5        7      7.3           3            2.3           0.61     1.39
+		6        7.5    0             0            0             0        0
+	}\hybrid
+
+	\pgfplotstableread{
+		Location Force  GlobalSolve   InnerSolve   CoarseSolve   GMRES    Other
+		1        4      9.1           3.38         3             0.96     1.76
+		2        4.5    9.1           3.4          2.85          1        1.85
+		3        5      9.2           3.5          3             1        1.7
+		4        6      9.2           3.6          2.8           1        1.8
+		5        7      0             0            0             0        0
+		6        7.5    0             0            0             0        0
+	}\RGDSWtwo
+ 
+  %% Overlap = 10
+	% \pgfplotstableread{
+	% 	Location Force  GlobalSolve   GMRES    Other
+	% 	1        4      7.2           6.5      0.7
+	% 	2        4.5    8.2           7.4      0.8
+	% 	3        5      0             0        0
+	% 	4        6      0             0        0
+	% 	5        7      0             0        0
+	% 	6        7.5    0             0        0
+	% }\NKS
+
+  %% Overlap = 5
+	\pgfplotstableread{
+		Location Force  GlobalSolve   GMRES    Other
+		1        4      5.1           4.4      0.7
+		2        4.5    6.1           5.2      0.9
+		3        5      0             0        0
+		4        6      0             0        0
+		5        7      0             0        0
+		6        7.5    0             0        0
+	}\NKS
+
+	\begin{axis}[bar shift=0pt, hide axis]
+		\node[mynodestyle]at (axis cs:1,0) {Add.};
+		\node[mynodestyle] (two) at (axis cs:1,9.1) {$75$ $(4)$};
+		\node[mynodestyle] at(axis cs:2,9.1) {$76$ $(4)$};
+		\node[mynodestyle] at(axis cs:3,9.1) {$76$ $(4)$};
+		\node[mynodestyle] at(axis cs:4,9.1) {$76$ $(4)$};
+		\node at(axis cs:5,.4) {\scriptsize\color{red}\ding{55}};
+		\node at(axis cs:6,.4) {\scriptsize\color{red}\ding{55}};
+
+		\addplot+ table [x=Location, y=InnerSolve] {\RGDSWtwo};
+		\addplot+ table [x=Location, y=CoarseSolve] {\RGDSWtwo};
+		\addplot+ table [x=Location, y=GMRES] {\RGDSWtwo};
+		\addplot+ table [x=Location, y=Other] {\RGDSWtwo};
+	\end{axis}
+
+	\begin{axis}[bar shift=11pt]
+		\node[mynodestyle] at ([xshift=11pt]axis cs:1,0) {H};
+		\node[xshift=11pt,mynodestyle] (three) at (axis cs:1,6.9) {$44$ $(3)$};
+		\node[xshift=11pt,mynodestyle] at (axis cs:2,7.3) {$44$ $(3)$};
+		\node[xshift=11pt,mynodestyle] at (axis cs:3,6.8) {$44$ $(3)$};
+		\node[xshift=11pt,mynodestyle] at (axis cs:4,7.1) {$45$ $(3)$};
+		\node[xshift=11pt,mynodestyle] at (axis cs:5,7.3) {$47$ $(3)$};
+		\node[xshift=11pt,rotate=0] at  (axis cs:6,.4) {\scriptsize\color{red}\ding{55}};
+
+		\addplot+ table [y=InnerSolve] {\hybrid}; \addlegendentry{Inner solve}
+		\addplot+ table [y=CoarseSolve] {\hybrid}; \addlegendentry{Coarse solve}
+		\addplot+ table [y=GMRES] {\hybrid}; \addlegendentry{GMRES}
+		\addplot+ table [y=Other] {\hybrid}; \addlegendentry{Other}
+	\end{axis}
+
+	\begin{axis}[bar shift=-11pt, hide axis, cycle list shift=2]
+		\node[mynodestyle]at ([xshift=-11pt]axis cs:1,0) {NKS};
+		\node[xshift=-11pt,mynodestyle] (one) at (axis cs:1,5.2) {$124$ $(5)$};
+		\node[xshift=-11pt,mynodestyle] at (axis cs:2,6.2) {$133$ $(5)$};
+		\node[xshift=-11pt,rotate=0] at (axis cs:3,.4) {\scriptsize\color{red}\ding{55}};
+		\node[xshift=-11pt,rotate=0] at (axis cs:4,.4) {\scriptsize\color{red}\ding{55}};
+		\node[xshift=-11pt,rotate=0] at (axis cs:5,.4) {\scriptsize\color{red}\ding{55}};
+		\node[xshift=-11pt,rotate=0] at (axis cs:6,.4) {\scriptsize\color{red}\ding{55}};
+		\node[text width=1.5cm] (gmres) at (axis cs:1,12.4) {GMRES its. (Newton its.)};
+
+		\addplot+ table [x=Location, y=GMRES] {\NKS};
+		\addplot+ table [x=Location, y=Other] {\NKS};
+	\end{axis}
+
+	\draw [thin] (gmres) --  (one);
+	\draw [thin] (gmres) --  (two);
+	\draw [thin] (gmres) --  (three);
+
+\end{tikzpicture}
