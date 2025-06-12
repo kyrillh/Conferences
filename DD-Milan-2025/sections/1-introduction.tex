@@ -1,15 +1,5 @@
 \section{Introduction}
 
-% TODO: use or not?
-% \begin{frame}{StroemungsRaum consortium}
-% 	% \hspace*{-2cm}
-% 	% \vspace*{-1cm}
-% 	\begin{figure}
-% 		\centering
-% 		\input{\mytikzpath/project-stroemungsraum.tex}
-% 	\end{figure}
-% \end{frame}
-
 \begin{frame}{Some References on Nonlinear Domain Decomposition Methods}
 	\tiny
 	\textbf{Nonlinear FETI-DP and Nonlinear BDDC:}\\
@@ -27,10 +17,10 @@
 	\textbf{RASPEN:}\\
 	Dolean, Gander, Kherijii, Kwok, Masson (2016)\\~\\
 
-    \hspace*{-2.7mm}
-    \noindent\fcolorbox{red}{white}{
-        \begin{minipage}{0.4\textwidth}
-            \textbf{Nonlinear 2-Level Schwarz:}\\
+	\hspace*{-2.7mm}
+	\noindent\fcolorbox{red}{white}{
+		\begin{minipage}{0.4\textwidth}
+			\textbf{Nonlinear 2-Level Schwarz:}\\
 			Heinlein, Lanser (2020); Heinlein, Klawonn, Lanser (2022)
 		\end{minipage}}\\~\\
 
@@ -43,8 +33,94 @@
 	Ganis, Juntunen, Pencheva, Wheeler, Yotov 2014; Ganis, Kumar, Pencheva, Wheeler, Yotov 2014
 \end{frame}
 
-\begin{frame}{Two-level nonlinear Schwarz}%: Nonlinearly preconditioned inexact Newton algorithms}}
+\begin{frame}{Two-level nonlinear Schwarz}
+	\hspace*{-7mm}
 	\input{images/tikz/nonlinear-schwarz-schematic.tex}
+\end{frame}
+
+\begin{frame}{How do we construct $\varPhi$ from saddle point system $K$?}
+	\begin{columns}
+		\begin{column}{0.52\textwidth}
+			\vspace{-3mm}
+			\begin{equation*}
+				Kx = \begin{bmatrix} A & B^T \\ B & 0 \end{bmatrix}\begin{bmatrix}u\\p\end{bmatrix} = \begin{bmatrix}f\\0\end{bmatrix}
+			\end{equation*}.
+			\begin{block}{\normalsize Monolithic RGDSW-type coarse space}
+				\begin{enumerate}
+					\item Partition of unity on the interface \begin{equation*}\sum_k \varPhi_\Gamma^k = 1\end{equation*}
+					\item<3-> Extend into interior by solving saddle point problem on subdomain with $f = 0$
+					      \begin{equation*}
+						      \varPhi_I^k = -K_{II}^{-1}K_{I\Gamma}\varPhi_\Gamma^k
+					      \end{equation*}
+				\end{enumerate}
+			\end{block}
+		\end{column}
+		\begin{column}{0.52\textwidth}
+			\vspace{-8mm}
+			\only<2,3>{
+				\begin{block}{\normalsize 2D Navier-Stokes $x$-velocity RGDSW coarse basis function interface values}
+					\begin{figure}
+						\vspace*{3mm}
+                        \hspace*{-9mm}
+						\centering
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+							\input{images/tikz/rgdsw-function.tex}
+							\vspace*{-5mm}
+							\caption{$x$-velocity dofs}
+						\end{subfigure}
+						\vfill
+						\hspace*{-12mm}
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+							\input{images/tikz/rgdsw-function-zero.tex}
+							\vspace*{-5mm}
+							\caption{$y$-velocity dofs}
+						\end{subfigure}
+                        \hspace{12mm}
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+							\input{images/tikz/rgdsw-function-zero.tex}
+							\vspace*{-5mm}
+							\caption{pressure dofs}
+						\end{subfigure}
+					\end{figure}
+                    \vspace{1.5mm}
+				\end{block}
+			}
+			\only<4>{
+				\begin{block}{\normalsize Extension into the interior}
+					\begin{figure}
+						\vspace*{1mm}
+                        \hspace*{-9mm}
+						\centering
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+                            \includegraphics[width=3cm,height=23mm]{images/RGDSW-x-cut.png}
+							\vspace*{-5mm}
+							\caption{$x$-velocity dofs}
+						\end{subfigure}
+						\vfill
+						\hspace*{-12mm}
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+                            \includegraphics[width=3cm,height=23mm]{images/RGDSW-y-cut.png}
+							\vspace*{-5mm}
+							\caption{$y$-velocity dofs}
+						\end{subfigure}
+                        \hspace{12mm}
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+                            \includegraphics[width=3cm,height=23mm]{images/RGDSW-p-cut.png}
+							\vspace*{-5mm}
+							\caption{pressure dofs}
+						\end{subfigure}
+					\end{figure}
+                    \vspace{-2mm}
+				\end{block}
+			}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Software ecosystem}

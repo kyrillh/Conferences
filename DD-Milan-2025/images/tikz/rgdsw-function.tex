@@ -1,0 +1,66 @@
+\begin{tikzpicture}[scale=0.6,
+		declare function={
+				f(\x)=(\x<0.25)*(2*\x) +
+				(\x>=0.25)*(\x<=0.75)*1/2+
+				(\x>=0.75)*(\x<=1)*(2*\x-1)+
+				(\x>=1)*(\x<=1.25)*(-2*\x+3)+
+				(\x>=1.25)*(\x<=1.75)*1/2+
+				(\x>1.75)*(-2*\x+4);
+			}
+	]
+	% Define a color the same as the first color in the specified colormap
+	\pgfplotscolormapaccess[0:1]{0}{Set2-5}
+	\def\TEMP{\definecolor{mycolor}{rgb}}
+	\expandafter\TEMP\expandafter{\pgfmathresult}
+	\begin{axis}[
+			width=10cm,
+			height=8cm,
+			view={35}{25},
+			xmin=-0.5, xmax=2.5,
+			ymin=-0.5, ymax=2.5,
+			zmin=0, zmax=1.2,
+			xtick=\empty,
+			ytick=\empty,
+			ztick=\empty,
+			grid=none,
+			axis lines=none,
+			ticks=none,
+			clip=false,
+		]
+
+
+		% \foreach \i in {0,...,9} {
+		%     \addplot3[gray!30] coordinates {(\i/3,0,0) (\i/3,3,0)};
+		%     \addplot3[gray!30] coordinates {(0,\i/3,0) (3,\i/3,0)};
+		% }
+
+
+
+		\foreach \i in {0,0.25,...,2} {
+				\addplot3[gray!30] coordinates {(\i,0,0) (\i,2,0)};
+				\addplot3[gray!30] coordinates {(0,\i,0) (2,\i,0)};
+			}
+
+
+		% Draw the 4x4 grid on z=0 plane with clear lines
+		\foreach \i in {0,...,2} {
+				\addplot3[black,line width=0.5pt] coordinates {(\i,0,0) (\i,2,0)};
+				\addplot3[black,line width=0.5pt] coordinates {(0,\i,0) (2,\i,0)};
+			}
+
+		\draw[variable=\t,domain=0:2,color=mycolor,line width=0.6pt,] plot (axis cs:\t,1,{f(\t)});
+		\draw[variable=\t,domain=0:2,color=mycolor,line width=0.6pt,] plot (axis cs:1,\t,{f(\t)});
+		\draw[variable=\t,domain=0:0.5,color=black!80,dashed] plot (axis cs:1,0.25,\t);
+		\draw[variable=\t,domain=0:0.5,color=black!80,dashed] plot (axis cs:1,0.75,\t);
+		\draw[color=mycolor,line width=0.6pt,] (0,0) -- (2,0);
+		\draw[color=mycolor,line width=0.6pt,] (0,0) -- (0,2);
+		\draw[color=mycolor,line width=0.6pt,] (2,2) -- (2,0);
+		\draw[color=mycolor,line width=0.6pt,] (2,2) -- (0,2);
+
+		% Mark the vertex v at position (2,2)
+		\addplot3[only marks, mark=*, mark options={scale=0.8, fill=mycolor}] coordinates {(1,1,0)};
+		\node[above] at (axis cs:1,1,0) {$\nu$};
+
+	\end{axis}
+
+\end{tikzpicture}

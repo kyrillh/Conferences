@@ -281,6 +281,49 @@
 	% \let\thefootnote\relax\footnote{Dohrmann, Widlund 2012}
 \end{frame}
 
+\begin{frame}[noframenumbering]{Hyperelasticity coarse basis modification}
+	\centering
+	\vspace{10mm}
+	\only<1>{
+		\input{images/tikz/beam-instability-1.tex}
+	}
+	\only<2>{
+		\input{images/tikz/beam-instability-2.tex}
+	}
+\end{frame}
+
+\begin{frame}[noframenumbering]{Hyperelasticity coarse basis modification}
+	\begin{figure}[h!]
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-1.png}
+			\caption{\hspace{-20mm}Side view original}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.49\textwidth}
+			\centering
+			\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-2.png}
+            \caption{\hspace{-20mm}Top view original}
+		\end{subfigure}
+		\vfill
+		\visible<2->{
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-3.png}
+                \caption{\hspace{-20mm}Side view modified}
+			\end{subfigure}
+			\hfill
+			\begin{subfigure}{0.49\textwidth}
+				\centering
+				\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-4.png}
+                \caption{\hspace{-20mm}Top view modified}
+			\end{subfigure}
+        }
+	\end{figure}
+\end{frame}
+
+
+
 \begin{frame}[noframenumbering]{Sanity check: nonlinear Laplace}
     \begin{columns}
         \begin{column}{0.47\textwidth}
@@ -311,3 +354,14 @@
       \input{\mytikzpath/weak-scaling-nonlin-laplace.tex}
   \end{figure}
  \end{frame}
+
+ \begin{frame}[noframenumbering]{StroemungsRaum consortium}
+	% \hspace*{-2cm}
+	% \vspace*{-1cm}
+	\begin{figure}
+		\centering
+		\input{\mytikzpath/project-stroemungsraum.tex}
+	\end{figure}
+\end{frame}
+
+
