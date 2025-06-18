@@ -21,9 +21,8 @@
 				\item Outer Newton max. iters. = $10$
 				\item GMRES rel. tol. = $10^{-6}$
 				\item GMRES max. its. = $100$
-				\item GMRES max. restarts = $20$
 				\item Recombination mode: averaging
-        % Note: overlap used here is the dual graph overlap. Actual overlap used for NKS = 5 to correspond to similar physicial overlap
+				      % Note: overlap used here is the dual graph overlap. Actual overlap used for NKS = 5 to correspond to similar physicial overlap
 				\item Coarse space: MsFEM elasticity with overlap = $5$
 			\end{itemize}
 		\end{column}%
@@ -31,9 +30,10 @@
 			Nonlinear Schwarz specific settings:
 			\vspace{7pt}
 			\begin{itemize}
-				\item Inner Newton rel. tol. = $10^{-5}$
+				\item Inner Newton rel. tol. = $10^{-3}$
 				\item Inner Newton abs. tol. = $10^{-9}$
 				\item Inner Newton max. iters. = $15$
+				\item Dual graph overlap = $10$
 			\end{itemize}
 		\end{column}
 	\end{columns}
@@ -48,7 +48,7 @@
 				\item Subdomain size: $150\times 150$ elements
 				\item Outer Newton rel. tol.  = \num{e-6}
 				\item Outer Newton abs. tol.  = \num{e-6}
-        \item Backtracking line-search
+				\item Backtracking line-search
 				\item GMRES rel. tol. = \num{e-4}
 				\item GMRES max. its. = $1000$
 				\item Krylov subspace dim. = $500$
@@ -70,8 +70,8 @@
 \end{frame}
 
 \begin{frame}[noframenumbering]{Adding a second level}
-	Build coarse space basis functions $\rightarrow$ $R_0$ and $P_0$ 
-    \begin{block}{RGDSW coarse space \footnotemark{}}
+	Build coarse space basis functions $\rightarrow$ $R_0$ and $P_0$
+	\begin{block}{RGDSW coarse space \footnotemark{}}
 		Define coarse basis $\Phi : V_0\mapsto V$
 		\begin{enumerate}
 			\setlength{\itemsep}{10pt}
@@ -88,7 +88,7 @@
 					\includegraphics[width=0.45\textwidth]{images/decomposed_domain.jpg}
 				\end{figure}
 			\end{column}
-            \hspace*{-20mm}
+			\hspace*{-20mm}
 			\begin{column}{0.4\textwidth}
 				\vspace*{-9mm}
 				\begin{figure}
@@ -113,7 +113,7 @@
 			P_0 \coloneqq \Phi\text{,}\quad R_0 \coloneqq \Phi^T
 		\end{equation*}
 	}
-\footnotetext{\tiny Dohrmann, Widlund (2017)}
+	\footnotetext{\tiny Dohrmann, Widlund (2017)}
 \end{frame}
 
 \begin{frame}[noframenumbering]{Motivation: linear vs nonlinear preconditioning}
@@ -210,7 +210,7 @@
 	\vspace{-5mm}
 	\begin{columns}
 		\begin{column}{0.7\textwidth}
-      \centering
+			\centering
 			\begin{block}{\normalsize Alternative nonlinear problem}
 				The discretized nonlinear partial differential equation
 				\begin{equation*}
@@ -218,7 +218,7 @@
 				\end{equation*}
 				is reformulated to
 				\begin{equation*}
-          \mathcal{F}(u) = 0,\, \mathcal{F} : V\mapsto V.
+					\mathcal{F}(u) = 0,\, \mathcal{F} : V\mapsto V.
 				\end{equation*}
 				The new nonlinear function $\mathcal{F}(u)$ is given implicitly by computing local nonlinear corrections $T_i(u),\,i = 1,\dots,N$ on (overlapping) subdomains
 			\end{block}
@@ -303,59 +303,59 @@
 		\begin{subfigure}{0.49\textwidth}
 			\centering
 			\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-2.png}
-            \caption{\hspace{-20mm}Top view original}
+			\caption{\hspace{-20mm}Top view original}
 		\end{subfigure}
 		\vfill
 		\visible<2->{
 			\begin{subfigure}{0.49\textwidth}
 				\centering
 				\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-3.png}
-                \caption{\hspace{-20mm}Side view modified}
+				\caption{\hspace{-20mm}Side view modified}
 			\end{subfigure}
 			\hfill
 			\begin{subfigure}{0.49\textwidth}
 				\centering
 				\includegraphics[width=0.7\textwidth,height=0.33\textheight]{images/beam-coarse-basis-4.png}
-                \caption{\hspace{-20mm}Top view modified}
+				\caption{\hspace{-20mm}Top view modified}
 			\end{subfigure}
-        }
+		}
 	\end{figure}
 \end{frame}
 
 
 
 \begin{frame}[noframenumbering]{Sanity check: nonlinear Laplace}
-    \begin{columns}
-        \begin{column}{0.47\textwidth}
-                \begin{align*}
-                    -\nabla\cdot((u^2+1)\nabla u)&=1\quad \text{in}\quad \Omega\subset\mathbb{R}^2,\\
-                    u &= 0\quad\text{on}\quad\partial\Omega\\
-                    u^0 &= 0
-                \end{align*}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=0.45\textwidth]{images/laplace}
-                \end{figure}
-        \end{column}
-        \begin{column}{0.53\textwidth}
-               \begin{itemize}
-                \setlength{\itemsep}{10pt}
-                \item Subdomain size: $300\times300$ elements
-                \item Solver relative tolerance: $10^{-4}$
-                \item MsFEM coarse space
-               \end{itemize} 
-        \end{column}
-    \end{columns}
- \end{frame}
- 
- \begin{frame}[noframenumbering]{Sanity check: weak scalability}
-  \begin{figure}
-      \centering
-      \input{\mytikzpath/weak-scaling-nonlin-laplace.tex}
-  \end{figure}
- \end{frame}
+	\begin{columns}
+		\begin{column}{0.47\textwidth}
+			\begin{align*}
+				-\nabla\cdot((u^2+1)\nabla u) & =1\quad \text{in}\quad \Omega\subset\mathbb{R}^2, \\
+				u                             & = 0\quad\text{on}\quad\partial\Omega              \\
+				u^0                           & = 0
+			\end{align*}
+			\begin{figure}
+				\centering
+				\includegraphics[width=0.45\textwidth]{images/laplace}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.53\textwidth}
+			\begin{itemize}
+				\setlength{\itemsep}{10pt}
+				\item Subdomain size: $300\times300$ elements
+				\item Solver relative tolerance: $10^{-4}$
+				\item MsFEM coarse space
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
 
- \begin{frame}[noframenumbering]{StroemungsRaum consortium}
+\begin{frame}[noframenumbering]{Sanity check: weak scalability}
+	\begin{figure}
+		\centering
+		\input{\mytikzpath/weak-scaling-nonlin-laplace.tex}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[noframenumbering]{StroemungsRaum consortium}
 	% \hspace*{-2cm}
 	% \vspace*{-1cm}
 	\begin{figure}
@@ -364,4 +364,29 @@
 	\end{figure}
 \end{frame}
 
-
+\begin{frame}[noframenumbering]{Nonlinear preconditioning using FROSch}
+	\begin{columns}
+		\begin{column}{0.49\textwidth}
+			\begin{block}{Two-level nonlinear Schwarz}
+				\begin{itemize}
+					\item Short info about nonlinear Schwarz
+				\end{itemize}
+			\end{block}
+		\end{column}
+		\begin{column}{0.49\textwidth}
+			\begin{figure}
+                \begin{subfigure}{\textwidth}
+					\centering
+					% \input{images/tikz/weak-scaling-nonlin-laplace-small.tex}
+                    \includegraphics[width=\textwidth]{images/nonlin-laplace-scalability.png}
+                    \caption{Weak scalability nonlinear diffusion}
+				\end{subfigure}
+                % \vspace{1mm}
+                % \begin{subfigure}{0.4\textwidth}
+                %     \input{images/tikz/nks-vs-nls-elasticity-small.tex}
+                %     \caption{Nonlinear Schwarz vs. Newton-Krylov-Schwarz for hyperelasticity}
+                % \end{subfigure}
+			\end{figure}
+		\end{column}
+	\end{columns}
+\end{frame}

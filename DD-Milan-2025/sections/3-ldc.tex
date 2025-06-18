@@ -14,7 +14,7 @@
 				\item $\mathcal{P}$1-$\mathcal{P}$1-Stab (Bochev-Dohrmann) \footnotemark{}
 				\item Subdomain size: $150\times 150$ elements
 				\item Solver absolute and relative tolerances: \num{e-6}
-				\item RGDSW coarse space \footnotemark[3]$^,$\footnotemark[4]$^,$\footnotemark[5]$^,$\footnotemark[6]$^,$\footnotemark[7]
+				\item RGDSW coarse space
 				\item Hybrid variant
 			\end{itemize}
 		\end{column}
@@ -26,7 +26,7 @@
 			\end{figure}
 		\end{column}
 	\end{columns}
-	{\let\thefootnote\relax\footnote{{\tiny \!\!\!\!\textsuperscript{2}Bochev, Dohrmann (2004),  \textsuperscript{3}Dohrmann, Widlund (2017), \textsuperscript{4}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{5}Dissertation Hochmuth (2021),\\\hspace{3em}\!\!\!\!\!\!\textsuperscript{6}Lanser, Klawonn (2024),  \textsuperscript{7}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
+	\footnotetext{\tiny Bochev, Dohrmann (2004)}
 \end{frame}
 
 \begin{frame}{Lid-driven cavity: nonlinear Schwarz weak scalability}
@@ -91,7 +91,7 @@
 \begin{frame}{Summary}
 	\begin{itemize}
 		\item Hybrid is more robust than NKS against nonlinearity.
-		\item It's weak scaling is excellent up to $4096$ subdomains\\then coarse solve time increases. % (larger coarse space improves nonlinear preconditioning)
+		\item Excellent weak scalability up to $9216$ subdomains. % (larger coarse space improves nonlinear preconditioning)
 		\item The two-level nonlinear Schwarz method is highly sensitive\\to variations in the coarse space.
 		\item It's difficult to tune, e.g., what makes a good coarse space?%: many parameters that have a potentialy significant impact on performance
 	\end{itemize}

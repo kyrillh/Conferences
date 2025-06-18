@@ -20,7 +20,7 @@
 	\hspace*{-2.7mm}
 	\noindent\fcolorbox{red}{white}{
 		\begin{minipage}{0.4\textwidth}
-			\textbf{Nonlinear 2-Level Schwarz:}\\
+			\textbf{Two-Level nonlinear Schwarz:}\\
 			Heinlein, Lanser (2020); Heinlein, Klawonn, Lanser (2022)
 		\end{minipage}}\\~\\
 
@@ -38,14 +38,20 @@
 	\input{images/tikz/nonlinear-schwarz-schematic.tex}
 \end{frame}
 
+\begin{frame}[noframenumbering]{Two-level nonlinear Schwarz}
+	\hspace*{-7mm}
+	\input{images/tikz/nonlinear-schwarz-schematic-H.tex}
+\end{frame}
+
 \begin{frame}{How do we construct $\varPhi$ from saddle point system $K$?}
 	\begin{columns}
 		\begin{column}{0.52\textwidth}
-			\vspace{-3mm}
+			\vspace{-6mm}
 			\begin{equation*}
 				Kx = \begin{bmatrix} A & B^T \\ B & 0 \end{bmatrix}\begin{bmatrix}u\\p\end{bmatrix} = \begin{bmatrix}f\\0\end{bmatrix}
 			\end{equation*}.
-			\begin{block}{\normalsize Monolithic RGDSW-type coarse space}
+			\vspace{-3mm}
+			\begin{block}{\normalsize Monolithic RGDSW coarse space \footnotemark[1]$^,$\footnotemark[2]$^,$\footnotemark[3]$^,$\footnotemark[4]$^,$\footnotemark[5]}
 				\begin{enumerate}
 					\item Partition of unity on the interface \begin{equation*}\sum_k \varPhi_\Gamma^k = 1\end{equation*}
 					\item<3-> Extend into interior by solving saddle point problem on subdomain with $f = 0$
@@ -53,15 +59,16 @@
 						      \varPhi_I^k = -K_{II}^{-1}K_{I\Gamma}\varPhi_\Gamma^k
 					      \end{equation*}
 				\end{enumerate}
+                \vspace{-2mm}
 			\end{block}
 		\end{column}
 		\begin{column}{0.52\textwidth}
-			\vspace{-8mm}
+			\vspace{-10mm}
 			\only<2,3>{
 				\begin{block}{\normalsize 2D Navier-Stokes $x$-velocity RGDSW coarse basis function interface values}
 					\begin{figure}
 						\vspace*{3mm}
-                        \hspace*{-9mm}
+						\hspace*{-9mm}
 						\centering
 						\begin{subfigure}{0.29\textwidth}
 							\centering
@@ -77,7 +84,7 @@
 							\vspace*{-5mm}
 							\caption{$y$-velocity dofs}
 						\end{subfigure}
-                        \hspace{12mm}
+						\hspace{12mm}
 						\begin{subfigure}{0.29\textwidth}
 							\centering
 							\input{images/tikz/rgdsw-function-zero.tex}
@@ -85,18 +92,18 @@
 							\caption{pressure dofs}
 						\end{subfigure}
 					\end{figure}
-                    \vspace{1.5mm}
+					\vspace{-3.5mm}
 				\end{block}
 			}
 			\only<4>{
 				\begin{block}{\normalsize Extension into the interior}
 					\begin{figure}
-						\vspace*{1mm}
-                        \hspace*{-9mm}
+						\vspace*{0mm}
+						\hspace*{-9mm}
 						\centering
 						\begin{subfigure}{0.29\textwidth}
 							\centering
-                            \includegraphics[width=3cm,height=23mm]{images/RGDSW-x-cut.png}
+							\includegraphics[width=3cm,height=23mm]{images/RGDSW-x-cut.png}
 							\vspace*{-5mm}
 							\caption{$x$-velocity dofs}
 						\end{subfigure}
@@ -104,25 +111,92 @@
 						\hspace*{-12mm}
 						\begin{subfigure}{0.29\textwidth}
 							\centering
-                            \includegraphics[width=3cm,height=23mm]{images/RGDSW-y-cut.png}
+                            \vspace*{-3mm}
+							\includegraphics[width=3cm,height=23mm]{images/RGDSW-y-cut.png}
 							\vspace*{-5mm}
 							\caption{$y$-velocity dofs}
 						\end{subfigure}
-                        \hspace{12mm}
+						\hspace{12mm}
 						\begin{subfigure}{0.29\textwidth}
 							\centering
-                            \includegraphics[width=3cm,height=23mm]{images/RGDSW-p-cut.png}
+                            \vspace*{-3mm}
+							\includegraphics[width=3cm,height=23mm]{images/RGDSW-p-cut.png}
 							\vspace*{-5mm}
 							\caption{pressure dofs}
 						\end{subfigure}
 					\end{figure}
-                    \vspace{-2mm}
+					\vspace{-4mm}
 				\end{block}
 			}
 		\end{column}
 	\end{columns}
+	{\let\thefootnote\relax\footnote{{\tiny \!\!\!\!\textsuperscript{1}Dohrmann, Widlund (2017), \textsuperscript{2}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{3}Dissertation Hochmuth (2021),  \textsuperscript{4}Lanser, Klawonn (2024),\\\hspace{3em}\!\!\!\!\!\!\textsuperscript{5}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
 \end{frame}
 
+\begin{frame}{How do we construct $\varPhi$ from saddle point system $K$?}
+	\begin{columns}
+		\begin{column}{0.52\textwidth}
+			\vspace{-10mm}
+			\begin{block}{\normalsize Monolithic RGDSW coarse space \footnotemark[1]$^,$\footnotemark[2]$^,$\footnotemark[3]$^,$\footnotemark[4]$^,$\footnotemark[5]}
+                \vspace{2mm}
+				Resulting $\varPhi$ has the following structure
+				\begin{equation*}
+					\varPhi = \begin{pmatrix}
+						\varPhi_{u,u_0} & \varPhi_{u,p_0} \\
+						\varPhi_{p,u_0} & \varPhi_{p,p_0} \\
+					\end{pmatrix}.
+				\end{equation*}
+                \vspace{2mm}
+				We set the off-diagonal blocks to zero
+				\begin{equation*}
+					\implies\begin{pmatrix}
+						\varPhi_{u,u_0} & 0               \\
+						0               & \varPhi_{p,p_0} \\
+					\end{pmatrix}.
+				\end{equation*}
+                \vspace{9mm}
+			\end{block}
+		\end{column}
+		\begin{column}{0.52\textwidth}
+			\vspace{-10mm}
+			\only<2>{
+				\begin{block}{\normalsize Extension into the interior}
+					\begin{figure}
+						\vspace*{0mm}
+						\hspace*{-9mm}
+						\centering
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+							\includegraphics[width=3cm,height=23mm]{images/RGDSW-x-cut.png}
+							\vspace*{-5mm}
+							\caption{$x$-velocity dofs}
+						\end{subfigure}
+						\vfill
+						\hspace*{-12mm}
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+                            \vspace*{-3mm}
+							\includegraphics[width=3cm,height=23mm]{images/RGDSW-y-cut.png}
+							\vspace*{-5mm}
+							\caption{$y$-velocity dofs}
+						\end{subfigure}
+						\hspace{12mm}
+						\begin{subfigure}{0.29\textwidth}
+							\centering
+                            \vspace*{-3mm}
+							\includegraphics[width=3cm,height=23mm]{images/RGDSW-p-cut-zero.png}
+							\vspace*{-5mm}
+							\caption{pressure dofs}
+						\end{subfigure}
+					\end{figure}
+					\vspace{-4mm}
+				\end{block}
+			}
+		\end{column}
+	\end{columns}
+	{\let\thefootnote\relax\footnote{{\tiny \!\!\!\!\textsuperscript{1}Dohrmann, Widlund (2017), \textsuperscript{2}Heinlein, Hochmuth, Klawonn (2020),  \textsuperscript{3}Dissertation Hochmuth (2021),  \textsuperscript{4}Lanser, Klawonn (2024),\\\hspace{3em}\!\!\!\!\!\!\textsuperscript{5}Heinlein, Klawonn, Knepper, Saßmannshausen (2025)}}}
+\end{frame}
+\setcounter{footnote}{5}
 \begin{frame}{Software ecosystem}
 	\input{images/tikz/Software}
 \end{frame}
