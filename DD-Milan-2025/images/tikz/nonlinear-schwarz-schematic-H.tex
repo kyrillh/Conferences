@@ -23,7 +23,7 @@
 	% \node[align=left, text width = 4.5cm, font=\small] at (9.5,-1.9){Solve with Newton's method for nonlinear corrections $T_i(u) \text{ for } i = 1,2,\dots,N$};
 
 	\node[draw, rectangle, text width = 4.9cm, minimum height=1cm, font=\small]
-    (boxedEq) at (rightEq) {\begin{equation*}\begin{split}&\mathcal{F}_H(u) = \\&\sum_{i=1}^{N} P_i T_i(u-P_0T_0(u)) + \varPhi T_0(u)\\&\quad\quad = 0\end{split}\end{equation*}};
+    (boxedEq) at (rightEq) {\begin{equation*}\begin{split}&\mathcal{F}_H(u) = \\&\sum_{i=1}^{N} P_i T_i(u-\varPhi T_0(u)) + \varPhi T_0(u)\\&\quad\quad = 0\end{split}\end{equation*}};
 
 	% Arrows
 	\draw[-{Stealth[length=3mm, width=2mm]}] ($(leftRectangle.north) + (1.3, -0.2)$) -- ($(topRectangle.south west) + (0.1, 0.6)$);
